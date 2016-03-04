@@ -1,0 +1,13 @@
+63
+87
+#AA0011
+#FF4800
+
+it only reads the first four lines
+y
+x
+backround color
+cell color
+
+
+#f4f4f4 makes backround look nonexistant
