@@ -12,7 +12,7 @@ public class Grid {
 		grid = new boolean[width][height];
 	}
 	
-	public void setTrue(int x, int y) {
+	public void changeCellState(int x, int y) {
 		grid[x][y] = true;
 	}
 	
