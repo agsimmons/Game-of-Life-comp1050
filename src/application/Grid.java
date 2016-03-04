@@ -13,7 +13,11 @@ public class Grid {
 	}
 	
 	public void changeCellState(int x, int y) {
-		grid[x][y] = true;
+		if (grid[x][y] == true) {
+			grid[x][y] = false;
+		} else {
+			grid[x][y] = true;
+		}
 	}
 	
 	public void update() {
