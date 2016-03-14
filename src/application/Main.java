@@ -1,25 +1,36 @@
 package application;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 import com.sun.org.apache.xerces.internal.impl.xs.SchemaGrammar.Schema4Annotations;
 
 import javafx.application.Application;
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.stage.Stage;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 
 public class Main extends Application {// all the usual javafx stuffs
 	@Override
@@ -30,9 +41,13 @@ public class Main extends Application {// all the usual javafx stuffs
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		
+		
 	}
 
 	@FXML
@@ -42,6 +57,8 @@ public class Main extends Application {// all the usual javafx stuffs
 	public static int X;
 	public static int Y;
 
+	public static boolean isLoop = false;
+	
 	public static String backround;
 	public static String Primary;
 	
@@ -51,15 +68,125 @@ public class Main extends Application {// all the usual javafx stuffs
 
 	@FXML
 	GridPane DrawGrid;
+	
+	@FXML
+	CheckBox loop;
 
-	public static int c = 1;
+	@FXML
+	Button startButton;
+	
+	@FXML
+	Button nextButton;
+	
+	
+	public static int c = 0;
+	
+	public boolean isFirst(){
+		if(c==0){
+		c++;
+			return true;
+			//nextButton.setText("Next");
+			//startButton.setText("start loop");
+		}
+		return false;
+	}
+	
+	public void NextButtton(ActionEvent e){
+		if(isFirst()){
+			try {
+				initAll();
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		
+		System.out.println("next  "+c);
+		//fixes the button lables
+		if(isLoop){
+			startButton.setText("Stop Loop");
+		}else{
+			startButton.setText("Start Loop");
+		}
+		
+		nextButton.setText("Next");
+		
+		
+		testButton();
+		makeClickable();
+		
+	}
 
+	
+	public void StartButton(ActionEvent e){
+		if(isFirst()){
+			try {
+				initAll();
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		
+		System.out.println("start");
+		
+		//button loop lables
+		if(isLoop){
+			startButton.setText("Stop Loop");
+		}else{
+			startButton.setText("Start Loop");
+		}
+		
+		makeClickable();
+	}
+
+	public void makeClickable(){
+		Node toMod = null;//the javafx node to be modified
+		
+		
+		//note to future self, getchildren returns an Observablelist, just so u know and dont have to trial and error alot again
+		ObservableList<Node> nodes = DrawGrid.getChildren();//adds all of the Drawgrids children to a list 
+		
+		for(final Node target : nodes){//for all nodes in the list nodes
+			target.setOnMouseClicked(new EventHandler<MouseEvent>()
+		    {
+
+		        @Override
+		        public void handle(MouseEvent m)
+		        {
+		            //sets its color to the primary color
+		            ((Shape) target).setFill(Color.web(Primary));
+		            
+		            //System.out.println(target.getProperties());
+		            //returns the x and y of the node when clicked
+		            
+		            //reads the nodes properties, looks for the property of row or column , makes it a string then an int
+		            int ClickedColumn = Integer.parseInt(target.getProperties().get("gridpane-column").toString());
+		            System.out.println("Column: "+ClickedColumn);
+		            
+		            int ClickedRow = Integer.parseInt(target.getProperties().get("gridpane-row").toString());
+		            System.out.println("Row: "+ClickedRow);
+		            
+		            
+
+		        }
+		    });
+		}
+		
+		
+		
+	}
+	
+	
 	public void addRow() {
 		// DrawGrid.add(null, 0, r);
 		RowConstraints Rcon = new RowConstraints();
 		Rcon.setPrefHeight(prefX);// pref height of grid, to be determined how
 									// calc
 		DrawGrid.getRowConstraints().add(Rcon);
+		
+		
+
 
 	}
 
@@ -107,9 +234,28 @@ public class Main extends Application {// all the usual javafx stuffs
 		}
 
 	}
+	
+	
+	public void initAll() throws FileNotFoundException{
 
-	public void getConf(ActionEvent e) {
-		Scanner scanner = new Scanner(getClass().getResourceAsStream("conf.txt"));// opens
+		getConf();//reads the config file
+		
+		calcPrefSize();//finds best size fro grid
+
+		initPopulate();//makes the grid
+
+		fill();//fill adn sets colors
+		
+		makeClickable();//makes all the cells clickable
+		//this must be refeshed after any cell is modified
+		
+	}
+	
+	public void getConf() throws FileNotFoundException {
+		File configFile = new File("config.txt");
+
+		
+		Scanner scanner = new Scanner(configFile);// opens
 																					// config
 																					// file
 		for (int i = 1; i < 5; i++) {// read first 4 lines of file
@@ -154,12 +300,6 @@ public class Main extends Application {// all the usual javafx stuffs
 		
 		//getConfig(); 
 		
-		calcPrefSize();//finds best size fro grid
-
-		initPopulate();//makes the grid
-
-		fill();//fill adn sets colors
-
 		// System.out.println("gridx "+DrawGrid.getHeight()+ "
 		// gridy"+DrawGrid.get);
 
@@ -196,7 +336,7 @@ public class Main extends Application {// all the usual javafx stuffs
 
 	}
 
-	public void testButton(ActionEvent e) {
+	public void testButton() {
 
 		popNode(c, c);
 		if(c>1){
@@ -274,5 +414,6 @@ public class Main extends Application {// all the usual javafx stuffs
 
 	public static void main(String[] args) {
 		launch(args);
+		
 	}
 }
