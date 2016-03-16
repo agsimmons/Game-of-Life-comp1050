@@ -108,4 +108,19 @@ public class Grid {
 		return grid[x][y];
 	}
 
+	public void setRuleOne(boolean state) {
+		enableRuleOne = state;
+	}
+
+	public void setRuleTwo(boolean state) {
+		enableRuleTwo = state;
+	}
+
+	public void setRuleThree(boolean state) {
+		enableRuleThree = state;
+	}
+
+	public void setRuleFour(boolean state) {
+		enableRuleFour = state;
+	}
 }
