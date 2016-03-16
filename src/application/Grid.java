@@ -54,7 +54,7 @@ public class Grid {
 		}
 	}
 
-	public int getNeighbors(int x, int y) {
+	private int getNeighbors(int x, int y) {
 		int count = 0;
 
 		// Check Left
