@@ -6,10 +6,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
-import com.sun.org.apache.xerces.internal.impl.xs.SchemaGrammar.Schema4Annotations;
-import com.sun.prism.shader.DrawCircle_Color_AlphaTest_Loader;
-import com.sun.prism.shader.DrawCircle_LinearGradient_PAD_AlphaTest_Loader;
-
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
