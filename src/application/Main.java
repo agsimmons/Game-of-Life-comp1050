@@ -199,16 +199,25 @@ public class Main extends Application {// all the usual javafx stuffs
 	}
 
 	public void addRandoms(ActionEvent e) {// adds random amount
+		
 		try {
-			popRandom(Integer.parseInt(randomCount.getText()));// if nothing is
+			int rand = Integer.parseInt(randomCount.getText());
+			
+			// if nothing is
 																// entered in
 																// the ranom
 																// amount text
 																// field, do
 																// nothing
+			if(Integer.parseInt(randomCount.getText())>(X*Y)){
+				System.out.println("Too big, add error here");
+				return;
+			}
+			popRandom(rand);
 		} catch (Exception exception) {
 			popRandom(0);
 		}
+		
 
 	}
 
@@ -229,16 +238,14 @@ public class Main extends Application {// all the usual javafx stuffs
 
 	public void popRandom(int number) {
 
-		// does not take into account the amount of cells already populated,
-		// makes it so if spammed grid not fill
-		/*
-		 * if(number>((X/10)*8)){//limits the amount of random number of cells
-		 * populated number=((X/10)*8);//to 80% of the total amount of cells }
-		 */
+		
 		int i = 0;
+		
 		do {// tries to populate random cells "number" times,
 			// these can overlap so if its told to populate 12 cells then 8
 			// could be populated with 4 overlap
+			
+			System.out.println("hey");
 			int popOrNor = (int) Math.round(Math.random());// 0 or 1 for yess
 															// poplate or not
 			// then random x and y coords that are possible
@@ -246,7 +253,7 @@ public class Main extends Application {// all the usual javafx stuffs
 			int randY = (int) (Math.random() * ((Y - 2) + 1) + 1);
 
 			if (popOrNor == 1) {// if populate
-				if (!true) {// if the cell is populated or not
+				if (true) {// if the cell is populated or not   change to !andrewcode
 
 					popNode(randX, randY);// then populate random node
 
