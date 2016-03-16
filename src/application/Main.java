@@ -91,128 +91,131 @@ public class Main extends Application {// all the usual javafx stuffs
 
 	@FXML
 	Slider heightSlider;
-	
+
 	@FXML
 	Slider widthSlider;
-	
+
 	@FXML
 	ColorPicker backColor;
-	
+
 	@FXML
 	ColorPicker primaryColor;
-		
+
 	@FXML
 	TextField heightText;
-	
+
 	@FXML
 	TextField widthText;
-	
+
 	@FXML
 	TextField randomCount;
-	
+
 	@FXML
 	Button addRandomsButton;
-	
-	public static int c = 0;//debugging counter and first checking var
-	
-	
-	public void initColors(){//gets the colors from the config and sets the labels
+
+	public static int c = 0;// debugging counter and first checking var
+
+	public void initColors() {// gets the colors from the config and sets the
+								// labels
 		backColor.setValue(Color.web(backround));
 		primaryColor.setValue(Color.web(Primary));
 	}
-	
-	public void initHeight(){
-		heightText.setText(Integer.toString(X-1));
+
+	public void initHeight() {
+		heightText.setText(Integer.toString(X - 1));
 		heightSlider.setValue(X);
 	}
-	
-	public void initWidth(){
-		widthText.setText(Integer.toString(Y-1));
+
+	public void initWidth() {
+		widthText.setText(Integer.toString(Y - 1));
 		widthSlider.setValue(Y);
 	}
-	
-	public void initLabels(){
+
+	public void initLabels() {
 		initColors();
 		initHeight();
 		initWidth();
 	}
-	
-	public void applyColor(ActionEvent e){
+
+	public void applyColor(ActionEvent e) {
 		String baseBack = "#";
 		String basePrimary = "#";
-		//reads the color settings and writes their settings to the color vars
+		// reads the color settings and writes their settings to the color vars
 		String back = backColor.getValue().toString();
 
 		String primary = primaryColor.getValue().toString();
-		
-		back = back.substring(2, 8);//trims the alpha values and the other parts
-		primary = primary.substring(2,8);
-		backround=baseBack.concat(back);//and sets them to web hex color strings
-		Primary=basePrimary.concat(primary);
-	
-		//needs to write the colors to config
 
-		
+		back = back.substring(2, 8);// trims the alpha values and the other
+									// parts
+		primary = primary.substring(2, 8);
+		backround = baseBack.concat(back);// and sets them to web hex color
+											// strings
+		Primary = basePrimary.concat(primary);
+
+		// needs to write the colors to config
+
 		fill();// fill colors
-		
-		initColors();//sets the color labels correctly
+
+		initColors();// sets the color labels correctly
 
 		makeClickable();// makes all the cells clickable
 		// this must be refeshed after any cell is modified
 
 	}
-	
+
 	/*
-	 *TODO make the sliders live update the labels
+	 * TODO make the sliders live update the labels
 	 * 
-	//refresh on slider release 
-	public void refreshHeight(ActionEvent e){
-		//heightText.setText(Double.toString(heightSlider.getValue()));
-		System.out.println(heightSlider.getValue());
-	}
+	 * //refresh on slider release public void refreshHeight(ActionEvent e){
+	 * //heightText.setText(Double.toString(heightSlider.getValue()));
+	 * System.out.println(heightSlider.getValue()); }
+	 * 
+	 * public void refreshWidth(ActionEvent e){
+	 * widthText.setText(Double.toString(widthSlider.getValue()));
+	 * 
+	 * }
+	 */
+	// apply and remake grid on button click
+	public void applyHeight(ActionEvent e) {
+		heightText.setText(Integer.toString((int) heightSlider.getValue()));
+		X = (int) (heightSlider.getValue());
+		widthText.setText(Integer.toString((int) widthSlider.getValue()));
 
-	public void refreshWidth(ActionEvent e){
-		widthText.setText(Double.toString(widthSlider.getValue()));
-		
-	}
-	*/
-	//apply  and remake grid on button click
-	public void applyHeight(ActionEvent e){
-		heightText.setText(Integer.toString((int)heightSlider.getValue()))   ;
-		X = (int)(heightSlider.getValue());
-		widthText.setText(Integer.toString((int)widthSlider.getValue()))   ;
+		Y = (int) (widthSlider.getValue());
 
-		Y =(int)(widthSlider.getValue());
-		
 		resetGrid();
 	}
 
-	public void applyWidth(ActionEvent e){
-		widthText.setText(Integer.toString((int)widthSlider.getValue()))   ;
+	public void applyWidth(ActionEvent e) {
+		widthText.setText(Integer.toString((int) widthSlider.getValue()));
 
-		Y =(int)(widthSlider.getValue());
-		
-		heightText.setText(Integer.toString((int)heightSlider.getValue()))   ;
-		X = (int)(heightSlider.getValue());
-		
+		Y = (int) (widthSlider.getValue());
+
+		heightText.setText(Integer.toString((int) heightSlider.getValue()));
+		X = (int) (heightSlider.getValue());
+
 		resetGrid();
 	}
-	
-	public void resetGrid(){
+
+	public void resetGrid() {
 		clearGrid();
 
 	}
 
-	public void addRandoms(ActionEvent e){//adds random amount
-		try{
-			popRandom(Integer.parseInt(randomCount.getText()));//if nothing is entered in the ranom amount text field, do nothing
-		}catch (Exception exception){
+	public void addRandoms(ActionEvent e) {// adds random amount
+		try {
+			popRandom(Integer.parseInt(randomCount.getText()));// if nothing is
+																// entered in
+																// the ranom
+																// amount text
+																// field, do
+																// nothing
+		} catch (Exception exception) {
 			popRandom(0);
 		}
-		
+
 	}
 
-	
 	public boolean isFirst() {
 		if (c == 0) {
 			c++;
@@ -222,43 +225,40 @@ public class Main extends Application {// all the usual javafx stuffs
 		}
 		return false;
 	}
-	
-	
+
 	/*
 	 * uses ~350mb ram on launch, later goes down to ~300mb
 	 * 
 	 */
-	
-	
-	
-	public void popRandom(int number){
-		
-		//does not take into account the amount of cells already populated, makes it so if spammed grid not fill
+
+	public void popRandom(int number) {
+
+		// does not take into account the amount of cells already populated,
+		// makes it so if spammed grid not fill
 		/*
-		if(number>((X/10)*8)){//limits the amount of random number of cells populated
-			number=((X/10)*8);//to 80% of the total amount of cells
-		}
-		*/
+		 * if(number>((X/10)*8)){//limits the amount of random number of cells
+		 * populated number=((X/10)*8);//to 80% of the total amount of cells }
+		 */
 		int i = 0;
-		do{//tries to populate random cells "number" times, 
-			//these can overlap so if its told to  populate 12 cells then 8 could be populated with 4 overlap
-			int popOrNor = (int) Math.round(Math.random());//0 or 1 for yess poplate or not
-			//then random x and y coords that are possible
-			int randX = (int)(Math.random() * ((X - 2) + 1) + 1);
-			int randY = (int)(Math.random() * ((Y - 2) + 1) + 1);
-			
-			if(popOrNor==1){//if populate
-				if(!true){//if the cell is populated or not
-					
-				
-				popNode(randX,randY);//then populate random node
-			
-				i++;
+		do {// tries to populate random cells "number" times,
+			// these can overlap so if its told to populate 12 cells then 8
+			// could be populated with 4 overlap
+			int popOrNor = (int) Math.round(Math.random());// 0 or 1 for yess
+															// poplate or not
+			// then random x and y coords that are possible
+			int randX = (int) (Math.random() * ((X - 2) + 1) + 1);
+			int randY = (int) (Math.random() * ((Y - 2) + 1) + 1);
+
+			if (popOrNor == 1) {// if populate
+				if (!true) {// if the cell is populated or not
+
+					popNode(randX, randY);// then populate random node
+
+					i++;
 				}
 			}
-		}while(i<number);
-		
-		
+		} while (i < number);
+
 	}
 
 	public void NextButtton(ActionEvent e) {
@@ -266,9 +266,9 @@ public class Main extends Application {// all the usual javafx stuffs
 			try {
 				initAll();
 				// fixes the button lables and loop state
-					startButton.setText("Start Loop");
-					isLoop=false;
-					loop.setSelected(false);
+				startButton.setText("Start Loop");
+				isLoop = false;
+				loop.setSelected(false);
 				nextButton.setText("Next");
 
 				return;
@@ -278,11 +278,9 @@ public class Main extends Application {// all the usual javafx stuffs
 			}
 		}
 
-
 		// for now it just does test stuff
 
-		popRandom(79);//popuate 79 random cells
-		
+		popRandom(79);// popuate 79 random cells
 
 		// at the end it must reupdate all of the nodes to tell them to be
 		// clckable because some of them might have chnaged
@@ -300,15 +298,14 @@ public class Main extends Application {// all the usual javafx stuffs
 			}
 		}
 
-
 		// button loop lables
 		if (isLoop) {
 			startButton.setText("Start Loop");
-			isLoop=false;
+			isLoop = false;
 			loop.setSelected(false);
 		} else {
 			startButton.setText("Stop Loop");
-			isLoop=true;
+			isLoop = true;
 			loop.setSelected(true);
 		}
 
@@ -382,7 +379,6 @@ public class Main extends Application {// all the usual javafx stuffs
 		prefX = (int) Math.ceil(((double) 600) / ((double) X));
 		prefY = (int) Math.ceil(((double) 600) / ((double) Y));
 
-
 		// makes biggest possible square boxes as possible that can fit within
 		// bounds
 
@@ -424,9 +420,9 @@ public class Main extends Application {// all the usual javafx stuffs
 		initPopulate();// makes the grid
 
 		fill();// fill adn sets colors
-		
+
 		initLabels();// refreshes all the options labels with config file values
-		
+
 		makeClickable();// makes all the cells clickable
 		// this must be refeshed after any cell is modified
 
@@ -490,11 +486,9 @@ public class Main extends Application {// all the usual javafx stuffs
 			// of one of the squares on the grid
 			// and makes a rectange that size and puts it on the grid
 
-		
 		for (int l = 1; l < Y; l++) {
 			for (int p = 1; p < X; p++) {
-				
-				
+
 				Rectangle o = new Rectangle();
 
 				o.setHeight(size);
@@ -511,28 +505,34 @@ public class Main extends Application {// all the usual javafx stuffs
 
 	}
 
-	public void clearGrid(){
+	public void clearGrid() {
 
-		
+		ObservableList<Node> nodes = DrawGrid.getChildren();// adds all of the
+		// Drawgrids
+		// children to a
+		// list
+
+		int count = 0;
+		for (final Node target : nodes) {// for all nodes in the list nodes
+			count++;
+
+		}
+
+		System.out.println("cells#" + (X - 1) * (Y - 1));
+		System.out.println(DrawGrid.getChildren());
+		System.out.println("nodes# " + count);
+
 		DrawGrid.setPrefSize(0, 0);
-		
-
-		calcPrefSize();// finds best size fro grid
-
-//		initPopulate();// makes the grid
-
-		reColor();
-		initLabels();// refreshes all the options labels with config file values
-		
-		makeClickable();// makes all the cells clickable
-		// this must be refeshed after any cell is modified
 
 	}
-	
-	public void reColor() {// can be used to set backrough color, will be triggered by the apply button from the colro changers
 
-		//also make it write the current color values to the config file so they are presistant
-		
+	public void reColor() {// can be used to set backrough color, will be
+							// triggered by the apply button from the colro
+							// changers
+
+		// also make it write the current color values to the config file so
+		// they are presistant
+
 		int size;
 		if (prefX > prefY) {
 			size = prefY;
@@ -540,18 +540,18 @@ public class Main extends Application {// all the usual javafx stuffs
 			size = prefX;
 		} else {
 			size = prefX;
-		}//get the correct x and y
+		} // get the correct x and y
 
-		//goes through all grid nodes and re sets the color to new values
+		// goes through all grid nodes and re sets the color to new values
 		for (int l = 1; l < Y; l++) {
 			for (int p = 1; p < X; p++) {
 
 				Rectangle o = new Rectangle();
-				
-				if(true){//use the getpop thing
+
+				if (true) {// use the getpop thing
 					o.setFill(Color.web(Primary));
-					
-				}else{
+
+				} else {
 					o.setFill(Color.web(backround));
 				}
 
