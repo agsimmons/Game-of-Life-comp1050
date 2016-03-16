@@ -1,0 +1,16 @@
+10
+10
+#b31a1a
+#FF4800
+
+it only reads the first four lines
+y
+x
+backround color
+cell color
+
+defaults
+20
+20
+#b31a1a
+#FF4800
