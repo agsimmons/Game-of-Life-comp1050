@@ -33,7 +33,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
-public class Main extends Application {// all the usual javafx stuffs
+public class Main extends Application { // All the usual JavaFX stuffs
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -136,26 +136,24 @@ public class Main extends Application {// all the usual javafx stuffs
 	public void applyColor(ActionEvent e) {
 		String baseBack = "#";
 		String basePrimary = "#";
-		// reads the color settings and writes their settings to the color vars
+		// Reads the color settings and writes their settings to the color vars
 		String back = backColor.getValue().toString();
 
 		String primary = primaryColor.getValue().toString();
 
-		back = back.substring(2, 8);// trims the alpha values and the other
-									// parts
+		back = back.substring(2, 8); // Trims the alpha values and the other parts
 		primary = primary.substring(2, 8);
-		backround = baseBack.concat(back);// and sets them to web hex color
-											// strings
+		backround = baseBack.concat(back); // And sets them to web hex color strings
 		Primary = basePrimary.concat(primary);
 
-		// needs to write the colors to config
+		// Needs to write the colors to config
 
-		fill();// fill colors
+		fill(); // Fill colors
 
-		initColors();// sets the color labels correctly
+		initColors(); // Sets the color labels correctly
 
-		makeClickable();// makes all the cells clickable
-		// this must be refeshed after any cell is modified
+		makeClickable(); // Makes all the cells clickable
+		// This must be refreshed after any cell is modified
 
 	}
 
@@ -171,7 +169,7 @@ public class Main extends Application {// all the usual javafx stuffs
 	 * 
 	 * }
 	 */
-	// apply and remake grid on button click
+	// Apply and remake grid on button click
 	public void applyHeight(ActionEvent e) {
 		heightText.setText(Integer.toString((int) heightSlider.getValue()));
 		X = (int) (heightSlider.getValue());
@@ -203,12 +201,7 @@ public class Main extends Application {// all the usual javafx stuffs
 		try {
 			int rand = Integer.parseInt(randomCount.getText());
 			
-			// if nothing is
-																// entered in
-																// the ranom
-																// amount text
-																// field, do
-																// nothing
+			// If nothing is entered in the random amount text field, do nothing
 			if(Integer.parseInt(randomCount.getText())>(X*Y)){
 				System.out.println("Too big, add error here");
 				return;
@@ -232,7 +225,7 @@ public class Main extends Application {// all the usual javafx stuffs
 	}
 
 	/*
-	 * uses ~350mb ram on launch, later goes down to ~300mb
+	 * Uses ~350mb ram on launch, later goes down to ~300mb
 	 * 
 	 */
 
@@ -241,21 +234,20 @@ public class Main extends Application {// all the usual javafx stuffs
 		
 		int i = 0;
 		
-		do {// tries to populate random cells "number" times,
+		do {// Tries to populate random cells "number" times,
 			// these can overlap so if its told to populate 12 cells then 8
 			// could be populated with 4 overlap
 			
 			System.out.println("hey");
-			int popOrNor = (int) Math.round(Math.random());// 0 or 1 for yess
-															// poplate or not
-			// then random x and y coords that are possible
+			int popOrNor = (int) Math.round(Math.random()); // 0 or 1 for yes populate or not
+			// then random x and y coordinates that are possible
 			int randX = (int) (Math.random() * ((X - 2) + 1) + 1);
 			int randY = (int) (Math.random() * ((Y - 2) + 1) + 1);
 
-			if (popOrNor == 1) {// if populate
-				if (true) {// if the cell is populated or not   change to !andrewcode
+			if (popOrNor == 1) { // If populate
+				if (true) { // If the cell is populated or not change to !andrewcode
 
-					popNode(randX, randY);// then populate random node
+					popNode(randX, randY); // Then populate random node
 
 					i++;
 				}
@@ -268,7 +260,7 @@ public class Main extends Application {// all the usual javafx stuffs
 		if (isFirst()) {
 			try {
 				initAll();
-				// fixes the button lables and loop state
+				// Fixes the button labels and loop state
 				startButton.setText("Start Loop");
 				isLoop = false;
 				loop.setSelected(false);
@@ -281,12 +273,12 @@ public class Main extends Application {// all the usual javafx stuffs
 			}
 		}
 
-		// for now it just does test stuff
+		// For now it just does test stuff
 
-		popRandom(79);// popuate 79 random cells
+		popRandom(79); // Populate 79 random cells
 
-		// at the end it must reupdate all of the nodes to tell them to be
-		// clckable because some of them might have chnaged
+		// at the end it must re-update all of the nodes to tell them to be
+		// Clickable because some of them might have changed
 		makeClickable();
 
 	}
@@ -301,7 +293,7 @@ public class Main extends Application {// all the usual javafx stuffs
 			}
 		}
 
-		// button loop lables
+		// Button loop labels
 		if (isLoop) {
 			startButton.setText("Start Loop");
 			isLoop = false;
@@ -317,16 +309,13 @@ public class Main extends Application {// all the usual javafx stuffs
 
 	public void makeClickable() {
 
-		// note to future self, getchildren returns an Observablelist, just so u
-		// know and dont have to trial and error alot again
-		ObservableList<Node> nodes = DrawGrid.getChildren();// adds all of the
-															// Drawgrids
-															// children to a
-															// list
+		// Note to future self, getchildren returns an Observablelist, just so u
+		// know and don't have to trial and error alot again
+		ObservableList<Node> nodes = DrawGrid.getChildren(); // Adds all of the Drawgrids children to a list
 
-		for (final Node target : nodes) {// for all nodes in the list nodes
+		for (final Node target : nodes) { // For all nodes in the list nodes
 			target.setOnMouseClicked(new EventHandler<MouseEvent>()
-			// this is what happens when the mouse is clicked on the node
+			// This is what happens when the mouse is clicked on the node
 			{
 
 				@Override
@@ -335,8 +324,7 @@ public class Main extends Application {// all the usual javafx stuffs
 					// System.out.println(target.getProperties());
 					// returns the x and y of the node when clicked
 
-					// reads the nodes properties, looks for the property of row
-					// or column , makes it a string then an int
+					// Reads the nodes properties, looks for the property of row or column , makes it a string then an int
 					int ClickedColumn = Integer.parseInt(target.getProperties().get("gridpane-column").toString());
 					System.out.println("Column: " + ClickedColumn);
 
@@ -356,7 +344,7 @@ public class Main extends Application {// all the usual javafx stuffs
 					}
 				}
 			});
-			// once this part is done, make it so dragging also works
+			// Once this part is done, make it so dragging also works
 			// just copy the code and make it set the drag event
 
 		}
@@ -382,25 +370,21 @@ public class Main extends Application {// all the usual javafx stuffs
 		prefX = (int) Math.ceil(((double) 600) / ((double) X));
 		prefY = (int) Math.ceil(((double) 600) / ((double) Y));
 
-		// makes biggest possible square boxes as possible that can fit within
-		// bounds
+		// Makes biggest possible square boxes as possible that can fit within bounds
 
-		// so each square area is prefY * prefX, well rectangle area in some
-		// cases
+		// so each square area is prefY * prefX, well rectangle area in some cases
 
 		// it will try to only use squares so if the dimensions are like 10 wide
 		// by 37 tall, it will be a
-		// tower of squares instead of being rectangel boxes
+		// tower of squares instead of being rectangles boxes
 	}
 
-	public void initPopulate() {// to be called to populate the grid with the
-								// initial values for the cells
+	public void initPopulate() { // To be called to populate the grid with the initial values for the cells
 
 		DrawGrid.gridLinesVisibleProperty().set(true);// so you can see the grid
 														// border
 
-		DrawGrid.setMaxSize(600, 600);// wont let the grid be bigger than the
-										// gridpane
+		DrawGrid.setMaxSize(600, 600);// wont let the grid be bigger than the gridpane
 
 		for (int i = 1; i != Y; i++) {
 			addRow();
@@ -416,31 +400,29 @@ public class Main extends Application {// all the usual javafx stuffs
 
 	public void initAll() throws FileNotFoundException {
 
-		getConf();// reads the config file
+		getConf(); // Reads the config file
 
-		calcPrefSize();// finds best size fro grid
+		calcPrefSize(); // Finds best size from grid
 
-		initPopulate();// makes the grid
+		initPopulate(); // Makes the grid
 
-		fill();// fill adn sets colors
+		fill(); // Fill and sets colors
 
-		initLabels();// refreshes all the options labels with config file values
+		initLabels(); // Refreshes all the options labels with config file values
 
-		makeClickable();// makes all the cells clickable
-		// this must be refeshed after any cell is modified
+		makeClickable(); // Makes all the cells clickable
+		// This must be refreshed after any cell is modified
 
 	}
 
 	public void getConf() throws FileNotFoundException {
 		File configFile = new File("config.txt");
 
-		Scanner scanner = new Scanner(configFile);// opens
-													// config
-													// file
-		for (int i = 1; i < 5; i++) {// read first 4 lines of file
+		Scanner scanner = new Scanner(configFile); // Opens config file
+		for (int i = 1; i < 5; i++) { // Read first 4 lines of file
 			if (i == 1) {
 				Y = scanner.nextInt() + 1;
-				// bounds are min 10x10 and max 100x100
+				// Bounds are min 10x10 and max 100x100
 				// is 0 indexed so it changes to 1 index check
 				if (Y < 11) {
 					Y = 11;
@@ -451,7 +433,7 @@ public class Main extends Application {// all the usual javafx stuffs
 				Ynumber.setText("Height: " + (Y - 1));
 			} else if (i == 2) {
 				X = scanner.nextInt() + 1;
-				// bounds are min 10x10 and max 100x100
+				// Bounds are min 10x10 and max 100x100
 				// is 0 indexed so it changes to 1 index check
 				if (X < 11) {
 					X = 11;
@@ -476,7 +458,7 @@ public class Main extends Application {// all the usual javafx stuffs
 		scanner.close();
 	}
 
-	public void fill() {// can be used to set backrough color
+	public void fill() { // Can be used to set backrough color
 
 		int size;
 		if (prefX > prefY) {
@@ -511,9 +493,7 @@ public class Main extends Application {// all the usual javafx stuffs
 	public void clearGrid() {
 
 		ObservableList<Node> nodes = DrawGrid.getChildren();// adds all of the
-		// Drawgrids
-		// children to a
-		// list
+		// Drawgrids children to a list
 
 		int count = 0;
 		for (final Node target : nodes) {// for all nodes in the list nodes
@@ -529,11 +509,11 @@ public class Main extends Application {// all the usual javafx stuffs
 
 	}
 
-	public void reColor() {// can be used to set backrough color, will be
+	public void reColor() { // Can be used to set backrough color, will be
 							// triggered by the apply button from the colro
 							// changers
 
-		// also make it write the current color values to the config file so
+		// Also make it write the current color values to the config file so
 		// they are presistant
 
 		int size;
@@ -543,17 +523,16 @@ public class Main extends Application {// all the usual javafx stuffs
 			size = prefX;
 		} else {
 			size = prefX;
-		} // get the correct x and y
+		} // Get the correct x and y
 
-		// goes through all grid nodes and re sets the color to new values
+		// Goes through all grid nodes and re sets the color to new values
 		for (int l = 1; l < Y; l++) {
 			for (int p = 1; p < X; p++) {
 
 				Rectangle o = new Rectangle();
 
-				if (true) {// use the getpop thing
+				if (true) { // Use the getpop thing
 					o.setFill(Color.web(Primary));
-
 				} else {
 					o.setFill(Color.web(backround));
 				}
@@ -561,12 +540,9 @@ public class Main extends Application {// all the usual javafx stuffs
 				DrawGrid.add(o, p, l);
 			}
 		}
-
 	}
 
-	public boolean checkOutOfBounds(int x, int y) {// checks if you are trying
-													// to edit a cell that isnt
-													// on the grid
+	public boolean checkOutOfBounds(int x, int y) {// checks if you are trying to edit a cell that isnt on the grid
 		if (x > X - 1) {
 			System.out.println("out of bounds error, but don't worry, I caught it for you");
 			return true;
@@ -591,7 +567,7 @@ public class Main extends Application {// all the usual javafx stuffs
 			size = prefX;
 		} else {
 			size = prefX;
-		} // finds the smallest preferd size which ends up being the side length
+		} // Finds the smallest preferd size which ends up being the side length
 			// of one of the squares on the grid
 			// and makes a rectange that size and puts it on the grid
 		Rectangle r = new Rectangle();
@@ -603,7 +579,7 @@ public class Main extends Application {// all the usual javafx stuffs
 
 		DrawGrid.add(r, x, y);
 
-		// then tell andrews code that a change has occured
+		// Then tell andrews code that a change has occured
 	}
 
 	public void unPopNode(int x, int y) {
@@ -619,9 +595,9 @@ public class Main extends Application {// all the usual javafx stuffs
 			size = prefX;
 		} else {
 			size = prefX;
-		} // finds the smallest preferd size which ends up being the side length
+		} // Finds the smallest preferred size which ends up being the side length
 			// of one of the squares on the grid
-			// and makes a rectange that size and puts it on the grid
+			// and makes a rectangle that size and puts it on the grid
 		Rectangle r = new Rectangle();
 
 		r.setHeight(size);
@@ -631,7 +607,7 @@ public class Main extends Application {// all the usual javafx stuffs
 
 		DrawGrid.add(r, x, y);
 
-		// then tell andrews code the chnage has happened
+		// Then tell Andrew's code the change has happened
 	}
 
 	public static void main(String[] args) {
