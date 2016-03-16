@@ -5,11 +5,18 @@ public class Grid {
 	private int width;
 	private int height;
 	private boolean[][] grid;
+	
+	private boolean enableRuleOne;
+	private boolean enableRuleTwo;
+	private boolean enableRuleThree;
+	private boolean enableRuleFour;
 
 	public Grid(int width, int height) {
 		this.width = width;
 		this.height = height;
 		grid = new boolean[width][height];
+		
+		enableRuleOne = enableRuleTwo = enableRuleThree = enableRuleFour = true;
 	}
 
 	public void changeCellState(int x, int y) {
