@@ -28,24 +28,43 @@ public class Grid {
 	}
 
 	public void simulateCycle() {
-		// TODO
-//		boolean tempGrid[][] = grid;
-//		
-//		for (int y = 0; y < height; y++) {
-//			for (int x = 0; x < width; x++) {
-//				
-//				if (grid[x][y] == true) { // If cell is alive
-//					// Any live cell with fewer than two live neighbours dies
-//					
-//					// Any live cell with two or three live neighbours lives on to the next generation.
-//					
-//					// Any live cell with more than three live neighbours dies
-//				} else { // If cell is dead
-//					// Any dead cell with exactly three live neighbours becomes a live cell
-//					
-//				}
-//			}
-//		}
+		boolean[][] tempGrid = new boolean[width][height];
+		
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				if (grid[x][y] == true) { // If cell is alive
+					// Any live cell with fewer than two live neighbors dies
+					if (enableRuleOne) {
+						if (getNeighbors(x, y) < 2) {
+							tempGrid[x][y] = false;
+						}
+					}
+
+					// Any live cell with two or three live neighbors lives on to the next generation.
+					if (enableRuleTwo) {
+						if (getNeighbors(x, y) == 2 || getNeighbors(x, y) == 3) {
+							tempGrid[x][y] = true;
+						}
+					}
+
+					// Any live cell with more than three live neighbors dies
+					if (enableRuleThree) {
+						if (getNeighbors(x, y) > 3) {
+							tempGrid[x][y] = false;
+						}
+					}
+				} else { // If cell is dead
+					// Any dead cell with exactly three live neighbors becomes a live cell
+					if (enableRuleFour) {
+						if (getNeighbors(x, y) == 3) {
+							tempGrid[x][y] = true;
+						}
+					}
+				}
+			}
+		}
+		
+		grid = tempGrid;
 	}
 
 	public void drawState() {
@@ -59,6 +78,7 @@ public class Grid {
 			}
 			System.out.println();
 		}
+		System.out.println();
 	}
 
 	private int getNeighbors(int x, int y) {
