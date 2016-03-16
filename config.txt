@@ -1,6 +1,6 @@
-12
-12
-#AA0011
+10
+10
+#b31a1a
 #FF4800
 
 it only reads the first four lines
