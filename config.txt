@@ -9,5 +9,8 @@ x
 backround color
 cell color
 
-
-#f4f4f4 makes backround look nonexistant
+defaults
+20
+20
+#b31a1a
+#FF4800

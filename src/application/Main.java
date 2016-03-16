@@ -7,6 +7,8 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 
 import com.sun.org.apache.xerces.internal.impl.xs.SchemaGrammar.Schema4Annotations;
+import com.sun.prism.shader.DrawCircle_Color_AlphaTest_Loader;
+import com.sun.prism.shader.DrawCircle_LinearGradient_PAD_AlphaTest_Loader;
 
 import javafx.application.Application;
 import javafx.collections.ObservableList;
@@ -111,7 +113,7 @@ public class Main extends Application {// all the usual javafx stuffs
 	@FXML
 	Button addRandomsButton;
 	
-	public static int c = 0;//debugging counter
+	public static int c = 0;//debugging counter and first checking var
 	
 	
 	public void initColors(){//gets the colors from the config and sets the labels
@@ -159,6 +161,10 @@ public class Main extends Application {// all the usual javafx stuffs
 		// this must be refeshed after any cell is modified
 
 	}
+	
+	/*
+	 *TODO make the sliders live update the labels
+	 * 
 	//refresh on slider release 
 	public void refreshHeight(ActionEvent e){
 		//heightText.setText(Double.toString(heightSlider.getValue()));
@@ -169,19 +175,37 @@ public class Main extends Application {// all the usual javafx stuffs
 		widthText.setText(Double.toString(widthSlider.getValue()));
 		
 	}
-	
+	*/
 	//apply  and remake grid on button click
 	public void applyHeight(ActionEvent e){
+		heightText.setText(Integer.toString((int)heightSlider.getValue()))   ;
+		X = (int)(heightSlider.getValue());
+		widthText.setText(Integer.toString((int)widthSlider.getValue()))   ;
+
+		Y =(int)(widthSlider.getValue());
 		
+		resetGrid();
 	}
 
 	public void applyWidth(ActionEvent e){
+		widthText.setText(Integer.toString((int)widthSlider.getValue()))   ;
+
+		Y =(int)(widthSlider.getValue());
 		
+		heightText.setText(Integer.toString((int)heightSlider.getValue()))   ;
+		X = (int)(heightSlider.getValue());
+		
+		resetGrid();
+	}
+	
+	public void resetGrid(){
+		clearGrid();
+
 	}
 
-	public void addRandoms(ActionEvent e){
+	public void addRandoms(ActionEvent e){//adds random amount
 		try{
-			popRandom(Integer.parseInt(randomCount.getText()));
+			popRandom(Integer.parseInt(randomCount.getText()));//if nothing is entered in the ranom amount text field, do nothing
 		}catch (Exception exception){
 			popRandom(0);
 		}
@@ -203,17 +227,6 @@ public class Main extends Application {// all the usual javafx stuffs
 	/*
 	 * uses ~350mb ram on launch, later goes down to ~300mb
 	 * 
-	 * 
-	 * DO A TAB PANE ON THE SIDE WITH "OPTIONS" AND "ACTIONS"
-	 * 
-	 * 
-	 * for the color change have r g b sliders for both back and primary 
-	 * also have 2 fields, 1 for each so you can see and change the hex color codes
-	 * 
-	 * also 2 height sliders and text boxes
-	 * 
-	 * 
-	 * also make a REfill method take into account if boxes are populated
 	 */
 	
 	
@@ -221,12 +234,13 @@ public class Main extends Application {// all the usual javafx stuffs
 	public void popRandom(int number){
 		
 		//does not take into account the amount of cells already populated, makes it so if spammed grid not fill
-		
+		/*
 		if(number>((X/10)*8)){//limits the amount of random number of cells populated
 			number=((X/10)*8);//to 80% of the total amount of cells
 		}
-		
-		for(int i = 0; i < number; i++){//tries to populate random cells "number" times, 
+		*/
+		int i = 0;
+		do{//tries to populate random cells "number" times, 
 			//these can overlap so if its told to  populate 12 cells then 8 could be populated with 4 overlap
 			int popOrNor = (int) Math.round(Math.random());//0 or 1 for yess poplate or not
 			//then random x and y coords that are possible
@@ -234,9 +248,15 @@ public class Main extends Application {// all the usual javafx stuffs
 			int randY = (int)(Math.random() * ((Y - 2) + 1) + 1);
 			
 			if(popOrNor==1){//if populate
+				if(!true){//if the cell is populated or not
+					
+				
 				popNode(randX,randY);//then populate random node
+			
+				i++;
+				}
 			}
-		}
+		}while(i<number);
 		
 		
 	}
@@ -362,8 +382,7 @@ public class Main extends Application {// all the usual javafx stuffs
 		prefX = (int) Math.ceil(((double) 600) / ((double) X));
 		prefY = (int) Math.ceil(((double) 600) / ((double) Y));
 
-		System.out.println(prefX);
-		System.out.println(prefY);
+
 		// makes biggest possible square boxes as possible that can fit within
 		// bounds
 
@@ -492,6 +511,23 @@ public class Main extends Application {// all the usual javafx stuffs
 
 	}
 
+	public void clearGrid(){
+
+		
+		DrawGrid.setPrefSize(0, 0);
+		
+
+		calcPrefSize();// finds best size fro grid
+
+//		initPopulate();// makes the grid
+
+		reColor();
+		initLabels();// refreshes all the options labels with config file values
+		
+		makeClickable();// makes all the cells clickable
+		// this must be refeshed after any cell is modified
+
+	}
 	
 	public void reColor() {// can be used to set backrough color, will be triggered by the apply button from the colro changers
 
