@@ -2,75 +2,74 @@ package application;
 
 public class Grid {
 
-	private int width;
-	private int height;
-	private boolean[][] grid;
+	private int gridWidth;
+	private int gridHeight;
+	private boolean[][] gridState;
 	
-	private boolean enableRuleOne;
-	private boolean enableRuleTwo;
-	private boolean enableRuleThree;
-	private boolean enableRuleFour;
+	private boolean ruleOneEnabled;
+	private boolean ruleTwoEnabled;
+	private boolean ruleThreeEnabled;
+	private boolean ruleFourEnabled;
 
 	public Grid(int width, int height) {
-		this.width = width;
-		this.height = height;
-		grid = new boolean[width][height];
+		gridWidth = width;
+		gridHeight = height;
+		gridState = new boolean[width][height];
 		
-		enableRuleOne = enableRuleTwo = enableRuleThree = enableRuleFour = true;
+		ruleOneEnabled = ruleTwoEnabled = ruleThreeEnabled = ruleFourEnabled = true;
 	}
 
 	public void changeCellState(int x, int y) {
-		if (grid[x][y] == true) {
-			grid[x][y] = false;
+		if (gridState[x][y] == true) {
+			gridState[x][y] = false;
 		} else {
-			grid[x][y] = true;
+			gridState[x][y] = true;
 		}
 	}
 
 	public void simulateCycle() {
-		boolean[][] tempGrid = new boolean[width][height];
+		boolean[][] tempGridState = new boolean[gridWidth][gridHeight];
 		
-		for (int y = 0; y < height; y++) {
-			for (int x = 0; x < width; x++) {
-				if (grid[x][y] == true) { // If cell is alive
+		for (int y = 0; y < gridHeight; y++) {
+			for (int x = 0; x < gridWidth; x++) {
+				if (gridState[x][y] == true) { // If cell is alive
 					// Any live cell with fewer than two live neighbors dies
-					if (enableRuleOne) {
-						if (getNeighbors(x, y) < 2) {
-							tempGrid[x][y] = false;
+					if (ruleOneEnabled) {
+						if (getNeighborCount(x, y) < 2) {
+							tempGridState[x][y] = false;
 						}
 					}
 
 					// Any live cell with two or three live neighbors lives on to the next generation.
-					if (enableRuleTwo) {
-						if (getNeighbors(x, y) == 2 || getNeighbors(x, y) == 3) {
-							tempGrid[x][y] = true;
+					if (ruleTwoEnabled) {
+						if (getNeighborCount(x, y) == 2 || getNeighborCount(x, y) == 3) {
+							tempGridState[x][y] = true;
 						}
 					}
 
 					// Any live cell with more than three live neighbors dies
-					if (enableRuleThree) {
-						if (getNeighbors(x, y) > 3) {
-							tempGrid[x][y] = false;
+					if (ruleThreeEnabled) {
+						if (getNeighborCount(x, y) > 3) {
+							tempGridState[x][y] = false;
 						}
 					}
 				} else { // If cell is dead
 					// Any dead cell with exactly three live neighbors becomes a live cell
-					if (enableRuleFour) {
-						if (getNeighbors(x, y) == 3) {
-							tempGrid[x][y] = true;
+					if (ruleFourEnabled) {
+						if (getNeighborCount(x, y) == 3) {
+							tempGridState[x][y] = true;
 						}
 					}
 				}
 			}
 		}
-		
-		grid = tempGrid;
+		gridState = tempGridState;
 	}
 
 	public void drawState() {
-		for (int y = 0; y < height; y++) {
-			for (int x = 0; x < width; x++) {
-				if (grid[x][y] == true) {
+		for (int y = 0; y < gridHeight; y++) {
+			for (int x = 0; x < gridWidth; x++) {
+				if (gridState[x][y] == true) {
 					System.out.print("■");
 				} else {
 					System.out.print("□");
@@ -78,49 +77,48 @@ public class Grid {
 			}
 			System.out.println();
 		}
-		System.out.println();
 	}
 
-	private int getNeighbors(int x, int y) {
+	private int getNeighborCount(int x, int y) {
 		int count = 0;
 
 		// Check Left
-		if (x > 0) { if (grid[x - 1][y] == true) {count++;} }
+		if (x > 0) { if (gridState[x - 1][y] == true) {count++;} }
 		// Check Top-Left
-		if (x > 0 && y > 0) { if (grid[x - 1][y - 1] == true) {count++;} }
+		if (x > 0 && y > 0) { if (gridState[x - 1][y - 1] == true) {count++;} }
 		// Check Top
-		if (y > 0) { if (grid[x][y - 1] == true) {count++;} }
+		if (y > 0) { if (gridState[x][y - 1] == true) {count++;} }
 		// Check Top-Right
-		if (x < width - 1 && y > 0) { if (grid[x + 1][y - 1] == true) {count++;} }
+		if (x < gridWidth - 1 && y > 0) { if (gridState[x + 1][y - 1] == true) {count++;} }
 		// Check Right
-		if (x < width - 1) { if (grid[x + 1][y] == true) {count++;} }
+		if (x < gridWidth - 1) { if (gridState[x + 1][y] == true) {count++;} }
 		// Check Bottom-Right
-		if (x < width - 1 && y < height - 1) { if (grid[x + 1][y + 1] == true) {count++;} }
+		if (x < gridWidth - 1 && y < gridHeight - 1) { if (gridState[x + 1][y + 1] == true) {count++;} }
 		// Check Bottom
-		if (y < height - 1) { if (grid[x][y + 1] == true) {count++;} }
+		if (y < gridHeight - 1) { if (gridState[x][y + 1] == true) {count++;} }
 		// Check Bottom-Left
-		if (x > 0 && y < height - 1) { if (grid[x - 1][y + 1] == true) {count++;} }
+		if (x > 0 && y < gridHeight - 1) { if (gridState[x - 1][y + 1] == true) {count++;} }
 
 		return count;
 	}
 
 	public boolean getCellState(int x, int y) {
-		return grid[x][y];
+		return gridState[x][y];
 	}
 
-	public void setRuleOne(boolean state) {
-		enableRuleOne = state;
+	public void setRuleOneState(boolean newState) {
+		ruleOneEnabled = newState;
 	}
 
-	public void setRuleTwo(boolean state) {
-		enableRuleTwo = state;
+	public void setRuleTwoState(boolean newState) {
+		ruleTwoEnabled = newState;
 	}
 
-	public void setRuleThree(boolean state) {
-		enableRuleThree = state;
+	public void setRuleThreeState(boolean newState) {
+		ruleThreeEnabled = newState;
 	}
 
-	public void setRuleFour(boolean state) {
-		enableRuleFour = state;
+	public void setRuleFourState(boolean newState) {
+		ruleFourEnabled = newState;
 	}
 }
