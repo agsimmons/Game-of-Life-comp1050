@@ -118,12 +118,12 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 	public void initHeight() {
 		heightText.setText(Integer.toString(X - 1));
-		heightSlider.setValue(X);
+		heightSlider.setValue(X-1);
 	}
 
 	public void initWidth() {
 		widthText.setText(Integer.toString(Y - 1));
-		widthSlider.setValue(Y);
+		widthSlider.setValue(Y-1);
 	}
 
 	public void initLabels() {
@@ -170,23 +170,51 @@ public class Main extends Application { // All the usual JavaFX stuffs
 	 */
 	// Apply and remake grid on button click
 	public void applyHeight(ActionEvent e) {
-		heightText.setText(Integer.toString((int) heightSlider.getValue()));
-		X = (int) (heightSlider.getValue());
-		widthText.setText(Integer.toString((int) widthSlider.getValue()));
-
-		Y = (int) (widthSlider.getValue());
-
+		
+		
+		if(Integer.parseInt(heightText.getText())!=(X-1)){
+			X=(Integer.parseInt(heightText.getText())+1);
+			
+		}else if((int) (heightSlider.getValue())!=(X-1)){
+			X=((int) (heightSlider.getValue())+1);
+			
+		}
+		
+		if(Integer.parseInt(widthText.getText())!=(Y-1)){
+			Y=(Integer.parseInt(widthText.getText())+1);
+			
+		}else if((int) (widthSlider.getValue())!=(Y-1)){
+			Y=((int) (widthSlider.getValue())+1);
+			
+		}
+		
+		initLabels();
+		
 		resetGrid();
 	}
 
 	public void applyWidth(ActionEvent e) {
-		widthText.setText(Integer.toString((int) widthSlider.getValue()));
 
-		Y = (int) (widthSlider.getValue());
 
-		heightText.setText(Integer.toString((int) heightSlider.getValue()));
-		X = (int) (heightSlider.getValue());
-
+		
+		if(Integer.parseInt(heightText.getText())!=(X-1)){
+			X=(Integer.parseInt(heightText.getText())+1);
+			
+		}else if((int) (heightSlider.getValue())!=(X-1)){
+			X=((int) (heightSlider.getValue())+1);
+			
+		}
+		
+		if(Integer.parseInt(widthText.getText())!=(Y-1)){
+			Y=(Integer.parseInt(widthText.getText())+1);
+			
+		}else if((int) (widthSlider.getValue())!=(Y-1)){
+			Y=((int) (widthSlider.getValue())+1);
+			
+		}
+		
+		initLabels();
+		
 		resetGrid();
 	}
 
@@ -233,7 +261,6 @@ public class Main extends Application { // All the usual JavaFX stuffs
 			// these can overlap so if its told to populate 12 cells then 8
 			// could be populated with 4 overlap
 			
-			System.out.println("hey");
 			int popOrNot = (int) Math.round(Math.random()); // 0 or 1 for yes populate or not
 			// then random x and y coordinates that are possible
 			int randX = (int) (Math.random() * ((X - 2) + 1) + 1);
@@ -273,10 +300,9 @@ public class Main extends Application { // All the usual JavaFX stuffs
 			}
 		}
 
-		// For now it just does test stuff
+		// needs to simulate a cycle
 
-		popRandom(79); // Populate 79 random cells
-
+		
 		// at the end it must re-update all of the nodes to tell them to be
 		// Clickable because some of them might have changed
 		makeClickable();
@@ -494,7 +520,8 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		System.out.println(DrawGrid.getChildren());
 		System.out.println("nodes# " + count);
 
-		DrawGrid.setPrefSize(0, 0);
+		DrawGrid.setPrefSize(1, 1);
+		DrawGrid.setMaxSize(600, 600);
 
 	}
 
