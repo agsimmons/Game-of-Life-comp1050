@@ -227,8 +227,8 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 	public void popRandom(int number) {
 
-		int i = 0;
-		
+		int i = 0;// counter for amount of randoms added 
+		int e = 0;// counter for amount of failed population attempts
 		do {// Tries to populate random cells "number" times,
 			// these can overlap so if its told to populate 12 cells then 8
 			// could be populated with 4 overlap
@@ -240,11 +240,16 @@ public class Main extends Application { // All the usual JavaFX stuffs
 			int randY = (int) (Math.random() * ((Y - 2) + 1) + 1);
 
 			if (popOrNor == 1) { // If populate
+				if(e>(X*Y)){
+					return;
+				}
 				if (true) { // If the cell is populated or not change to !andrewcode
 
 					popNode(randX, randY); // Then populate random node
 
 					i++;
+				}else{
+					e++;//if it fails to populate too much, that means the grid is full so stop trying to add more
 				}
 			}
 		} while (i < number);
