@@ -109,10 +109,9 @@ public class Main extends Application { // All the usual JavaFX stuffs
 	@FXML
 	Button addRandomsButton;
 
-	public static int c = 0;// debugging counter and first checking var
+	public static int debugCounter = 0; // Debugging counter and first checking var
 
-	public void initColors() {// gets the colors from the config and sets the
-								// labels
+	public void initColors() { // Gets the colors from the config and sets the labels
 		backColor.setValue(Color.web(backround));
 		primaryColor.setValue(Color.web(Primary));
 	}
@@ -193,7 +192,6 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 	public void resetGrid() {
 		clearGrid();
-
 	}
 
 	public void addRandoms(ActionEvent e) {// adds random amount
@@ -210,13 +208,11 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		} catch (Exception exception) {
 			popRandom(0);
 		}
-		
-
 	}
 
 	public boolean isFirst() {
-		if (c == 0) {
-			c++;
+		if (debugCounter == 0) {
+			debugCounter++;
 			return true;
 			// nextButton.setText("Next");
 			// startButton.setText("start loop");
@@ -231,7 +227,6 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 	public void popRandom(int number) {
 
-		
 		int i = 0;
 		
 		do {// Tries to populate random cells "number" times,
@@ -346,23 +341,19 @@ public class Main extends Application { // All the usual JavaFX stuffs
 			});
 			// Once this part is done, make it so dragging also works
 			// just copy the code and make it set the drag event
-
 		}
-
 	}
 
 	public void addRow() {
 		RowConstraints Rcon = new RowConstraints();
 		Rcon.setPrefHeight(prefX);
 		DrawGrid.getRowConstraints().add(Rcon);
-
 	}
 
 	public void addCol() {
 		ColumnConstraints Ccon = new ColumnConstraints();
 		Ccon.setPrefWidth(prefY);
 		DrawGrid.getColumnConstraints().add(Ccon);
-
 	}
 
 	public void calcPrefSize() {
@@ -381,21 +372,16 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 	public void initPopulate() { // To be called to populate the grid with the initial values for the cells
 
-		DrawGrid.gridLinesVisibleProperty().set(true);// so you can see the grid
-														// border
-
+		DrawGrid.gridLinesVisibleProperty().set(true);// so you can see the grid border
 		DrawGrid.setMaxSize(600, 600);// wont let the grid be bigger than the gridpane
 
 		for (int i = 1; i != Y; i++) {
 			addRow();
-
 		}
 
 		for (int i = 1; i != X; i++) {
 			addCol();
-
 		}
-
 	}
 
 	public void initAll() throws FileNotFoundException {
@@ -444,7 +430,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 				Xnumber.setText("Width: " + (X - 1));
 			} else if (i == 3) {
 				backround = scanner.next();
-				// System.out.println(backround);
+				// System.out.println(background);
 			} else if (i == 4) {
 				Primary = scanner.next();
 				// System.out.println(Primary);
@@ -458,7 +444,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		scanner.close();
 	}
 
-	public void fill() { // Can be used to set backrough color
+	public void fill() { // Can be used to set background color
 
 		int size;
 		if (prefX > prefY) {
@@ -467,9 +453,9 @@ public class Main extends Application { // All the usual JavaFX stuffs
 			size = prefX;
 		} else {
 			size = prefX;
-		} // finds the smallest preferd size which ends up being the side length
+		} // finds the smallest preferred size which ends up being the side length
 			// of one of the squares on the grid
-			// and makes a rectange that size and puts it on the grid
+			// and makes a rectangle that size and puts it on the grid
 
 		for (int l = 1; l < Y; l++) {
 			for (int p = 1; p < X; p++) {
@@ -487,7 +473,6 @@ public class Main extends Application { // All the usual JavaFX stuffs
 				DrawGrid.add(o, p, l);
 			}
 		}
-
 	}
 
 	public void clearGrid() {
@@ -498,7 +483,6 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		int count = 0;
 		for (final Node target : nodes) {// for all nodes in the list nodes
 			count++;
-
 		}
 
 		System.out.println("cells#" + (X - 1) * (Y - 1));
@@ -509,12 +493,12 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 	}
 
-	public void reColor() { // Can be used to set backrough color, will be
-							// triggered by the apply button from the colro
+	public void reColor() { // Can be used to set background color, will be
+							// triggered by the apply button from the color
 							// changers
 
 		// Also make it write the current color values to the config file so
-		// they are presistant
+		// they are persistent
 
 		int size;
 		if (prefX > prefY) {
@@ -567,9 +551,9 @@ public class Main extends Application { // All the usual JavaFX stuffs
 			size = prefX;
 		} else {
 			size = prefX;
-		} // Finds the smallest preferd size which ends up being the side length
+		} // Finds the smallest preferred size which ends up being the side length
 			// of one of the squares on the grid
-			// and makes a rectange that size and puts it on the grid
+			// and makes a rectangle that size and puts it on the grid
 		Rectangle r = new Rectangle();
 
 		r.setHeight(size);
@@ -579,7 +563,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 		DrawGrid.add(r, x, y);
 
-		// Then tell andrews code that a change has occured
+		// Then tell Andrew's code that a change has occurred
 	}
 
 	public void unPopNode(int x, int y) {
@@ -612,6 +596,5 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 	public static void main(String[] args) {
 		launch(args);
-
 	}
 }
