@@ -227,32 +227,32 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 	public void popRandom(int number) {
 
-		int i = 0;// counter for amount of randoms added 
-		int e = 0;// counter for amount of failed population attempts
+		int randomAttemptCounter = 0;// counter for amount of randoms added 
+		int randomAttemptFailedCounter = 0;// counter for amount of failed population attempts
 		do {// Tries to populate random cells "number" times,
 			// these can overlap so if its told to populate 12 cells then 8
 			// could be populated with 4 overlap
 			
 			System.out.println("hey");
-			int popOrNor = (int) Math.round(Math.random()); // 0 or 1 for yes populate or not
+			int popOrNot = (int) Math.round(Math.random()); // 0 or 1 for yes populate or not
 			// then random x and y coordinates that are possible
 			int randX = (int) (Math.random() * ((X - 2) + 1) + 1);
 			int randY = (int) (Math.random() * ((Y - 2) + 1) + 1);
 
-			if (popOrNor == 1) { // If populate
-				if(e>(X*Y)){
+			if (popOrNot == 1) { // If populate
+				if(randomAttemptFailedCounter>(X*Y)){
 					return;
 				}
 				if (true) { // If the cell is populated or not change to !andrewcode
 
 					popNode(randX, randY); // Then populate random node
 
-					i++;
+					randomAttemptCounter++;
 				}else{
-					e++;//if it fails to populate too much, that means the grid is full so stop trying to add more
+					randomAttemptFailedCounter++;//if it fails to populate too much, that means the grid is full so stop trying to add more
 				}
 			}
-		} while (i < number);
+		} while (randomAttemptCounter < number);
 
 	}
 
