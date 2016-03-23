@@ -1,6 +1,6 @@
 package application;
 
-public class Grid {
+public class Grid implements GridInterface {
 
 	private int gridWidth;
 	private int gridHeight;
