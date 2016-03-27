@@ -2,6 +2,9 @@ package application;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Paths;
 import java.util.Scanner;
@@ -153,6 +156,12 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 		makeClickable(); // Makes all the cells clickable
 		// This must be refreshed after any cell is modified
+		try {
+			writeConf();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 	}
 
@@ -169,6 +178,23 @@ public class Main extends Application { // All the usual JavaFX stuffs
 	 * }
 	 */
 	// Apply and remake grid on button click
+	
+	
+	
+	public void writeConf() throws IOException {
+		System.out.println("config saved");
+
+		PrintWriter pw = new PrintWriter(new FileWriter("config.txt"));
+
+		pw.write(Integer.toString((X - 1))+"\n");
+		pw.write(Integer.toString((Y - 1))+"\n");
+		pw.write(backround+"\n");
+		pw.write(Primary+"\n");
+		
+		pw.close();
+
+	}
+	
 	public void applyHeight(ActionEvent e) {
 		
 		
@@ -219,6 +245,12 @@ public class Main extends Application { // All the usual JavaFX stuffs
 	}
 
 	public void resetGrid() {
+		try {
+			writeConf();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		clearGrid();
 	}
 
@@ -412,6 +444,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 		for (int i = 1; i != X; i++) {
 			addCol();
+			
 		}
 	}
 
