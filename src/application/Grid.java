@@ -11,6 +11,7 @@ public class Grid implements GridInterface {
 	private boolean ruleThreeEnabled;
 	private boolean ruleFourEnabled;
 
+	
 	public Grid(int width, int height) {
 		gridWidth = width;
 		gridHeight = height;

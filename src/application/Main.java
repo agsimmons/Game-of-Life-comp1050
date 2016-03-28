@@ -58,6 +58,8 @@ public class Main extends Application { // All the usual JavaFX stuffs
 	Label Xnumber;
 	public static int X;
 	public static int Y;
+	
+	//TODO find bug that makes back and prime switch and x and y switch
 
 	public static boolean isLoop = false;
 
@@ -128,13 +130,13 @@ public class Main extends Application { // All the usual JavaFX stuffs
 	}
 
 	public void initHeight() {
-		heightText.setText(Integer.toString(X - 1));
-		heightSlider.setValue(X-1);
+		heightText.setText(Integer.toString(Y - 1));
+		heightSlider.setValue(Y-1);
 	}
 
 	public void initWidth() {
-		widthText.setText(Integer.toString(Y - 1));
-		widthSlider.setValue(Y-1);
+		widthText.setText(Integer.toString(X - 1));
+		widthSlider.setValue(X-1);
 	}
 
 	public void initLabels() {
@@ -216,19 +218,19 @@ public class Main extends Application { // All the usual JavaFX stuffs
 	public void applyHeight(ActionEvent e) {
 		
 		
-		if(Integer.parseInt(heightText.getText())!=(X-1)){
-			X=(Integer.parseInt(heightText.getText())+1);
+		if(Integer.parseInt(heightText.getText())!=(Y-1)){
+			Y=(Integer.parseInt(heightText.getText())+1);
 			
-		}else if((int) (heightSlider.getValue())!=(X-1)){
-			X=((int) (heightSlider.getValue())+1);
+		}else if((int) (heightSlider.getValue())!=(Y-1)){
+			Y=((int) (heightSlider.getValue())+1);
 			
 		}
 		
-		if(Integer.parseInt(widthText.getText())!=(Y-1)){
-			Y=(Integer.parseInt(widthText.getText())+1);
+		if(Integer.parseInt(widthText.getText())!=(X-1)){
+			X=(Integer.parseInt(widthText.getText())+1);
 			
-		}else if((int) (widthSlider.getValue())!=(Y-1)){
-			Y=((int) (widthSlider.getValue())+1);
+		}else if((int) (widthSlider.getValue())!=(X-1)){
+			X=((int) (widthSlider.getValue())+1);
 			
 		}
 		
@@ -484,12 +486,14 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 		fill(); // Fill and sets colors
 
-		initLabels(); // Refreshes all the options labels with config file values
 
 		makeClickable(); // Makes all the cells clickable
 		// This must be refreshed after any cell is modified
 		
 		baseGrid = new Grid(X, Y);
+		
+		initLabels(); // Refreshes all the options labels with config file values
+		
 		
 
 	}
