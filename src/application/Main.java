@@ -144,8 +144,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 	}
 
 	public void save(ActionEvent e) {
-		reColor();
-		reColor();
+		
 	}
 
 	public void load(ActionEvent e) {
@@ -337,7 +336,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		baseGrid.simulateCycle();
 		reColor();
 		System.out.println("----------");
-		baseGrid.drawStateCompatability();
+		//baseGrid.drawStateCompatability();
 
 		// at the end it must re-update all of the nodes to tell them to be
 		// Clickable because some of them might have changed
@@ -404,7 +403,9 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 					}
 					
-					baseGrid.drawStateCompatability();
+					reColor();
+					reColor();
+					//baseGrid.drawStateCompatability();
 
 				}
 			});
@@ -484,8 +485,8 @@ public class Main extends Application { // All the usual JavaFX stuffs
 				if (Y < 11) {
 					Y = 11;
 				}
-				if (Y > 101) {
-					Y = 101;
+				if (Y > 51) {
+					Y = 51;
 				}
 				Ynumber.setText("Height: " + (Y - 1));
 			} else if (i == 2) {
@@ -495,8 +496,8 @@ public class Main extends Application { // All the usual JavaFX stuffs
 				if (X < 11) {
 					X = 11;
 				}
-				if (X > 101) {
-					X = 101;
+				if (X > 51) {
+					X = 51;
 				}
 				Xnumber.setText("Width: " + (X - 1));
 			} else if (i == 3) {
