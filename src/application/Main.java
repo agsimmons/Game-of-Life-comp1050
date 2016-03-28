@@ -45,11 +45,9 @@ public class Main extends Application { // All the usual JavaFX stuffs
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	@FXML
@@ -58,7 +56,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 	Label Xnumber;
 	public static int X;
 	public static int Y;
-	
+
 	//TODO find bug that makes back and prime switch and x and y switch
 
 	public static boolean isLoop = false;
@@ -68,7 +66,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 	public static int prefX;
 	public static int prefY;
-	
+
 	public static Grid baseGrid;
 
 	@FXML
@@ -144,6 +142,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		initHeight();
 		initWidth();
 	}
+
 	public void save(ActionEvent e) {
 		
 	}
@@ -164,7 +163,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		primary = primary.substring(2, 8);
 		backround = baseBack.concat(back); // And sets them to web hex color strings
 		Primary = basePrimary.concat(primary);
-		
+
 		System.out.println("back: "+backround);
 		System.out.println("prime: "+Primary);
 		// Needs to write the colors to config
@@ -172,7 +171,6 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 		reColor();
 		//fill(); // Fill colors
-
 
 		makeClickable(); // Makes all the cells clickable
 		// This must be refreshed after any cell is modified
@@ -182,7 +180,6 @@ public class Main extends Application { // All the usual JavaFX stuffs
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-
 	}
 
 	/*
@@ -198,9 +195,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 	 * }
 	 */
 	// Apply and remake grid on button click
-	
-	
-	
+
 	public void writeConf() throws IOException {
 		System.out.println("config saved");
 
@@ -210,56 +205,45 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		pw.write(Integer.toString((Y - 1))+"\n");
 		pw.write(backround+"\n");
 		pw.write(Primary+"\n");
-		
-		pw.close();
 
+		pw.close();
 	}
-	
+
 	public void applyHeight(ActionEvent e) {
-		
-		
-		if(Integer.parseInt(heightText.getText())!=(Y-1)){
+
+		if(Integer.parseInt(heightText.getText())!=(Y-1)) {
 			Y=(Integer.parseInt(heightText.getText())+1);
 			
-		}else if((int) (heightSlider.getValue())!=(Y-1)){
+		} else if((int) (heightSlider.getValue())!=(Y-1)) {
 			Y=((int) (heightSlider.getValue())+1);
-			
 		}
 		
-		if(Integer.parseInt(widthText.getText())!=(X-1)){
+		if(Integer.parseInt(widthText.getText())!=(X-1)) {
 			X=(Integer.parseInt(widthText.getText())+1);
-			
-		}else if((int) (widthSlider.getValue())!=(X-1)){
+		} else if((int) (widthSlider.getValue())!=(X-1)) {
 			X=((int) (widthSlider.getValue())+1);
-			
 		}
-		
+
 		initLabels();
-		
 		resetGrid();
 	}
 
 	public void applyWidth(ActionEvent e) {
-		
-		
+
 		if(Integer.parseInt(heightText.getText())!=(Y-1)){
 			Y=(Integer.parseInt(heightText.getText())+1);
-			
 		}else if((int) (heightSlider.getValue())!=(Y-1)){
 			Y=((int) (heightSlider.getValue())+1);
-			
 		}
 		
 		if(Integer.parseInt(widthText.getText())!=(X-1)){
 			X=(Integer.parseInt(widthText.getText())+1);
-			
 		}else if((int) (widthSlider.getValue())!=(X-1)){
 			X=((int) (widthSlider.getValue())+1);
-			
 		}
-		
+
 		initLabels();
-		
+
 		resetGrid();
 	}
 
@@ -300,11 +284,6 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		return false;
 	}
 
-	/*
-	 * Uses ~350mb ram on launch, later goes down to ~300mb
-	 * 
-	 */
-
 	public void popRandom(int number) {
 
 		int randomAttemptCounter = 0;// counter for amount of randoms added 
@@ -312,7 +291,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		do {// Tries to populate random cells "number" times,
 			// these can overlap so if its told to populate 12 cells then 8
 			// could be populated with 4 overlap
-			
+
 			int popOrNot = (int) Math.round(Math.random()); // 0 or 1 for yes populate or not
 			// then random x and y coordinates that are possible
 			int randX = (int) (Math.random() * ((X - 2) + 1) + 1);
@@ -322,17 +301,17 @@ public class Main extends Application { // All the usual JavaFX stuffs
 				if(randomAttemptFailedCounter>(X*Y)){
 					return;
 				}
+				// TODO
 				if (true) { // If the cell is populated or not change to !andrewcode
 
 					popNode(randX, randY); // Then populate random node
 
 					randomAttemptCounter++;
-				}else{
-					randomAttemptFailedCounter++;//if it fails to populate too much, that means the grid is full so stop trying to add more
+				} else {
+					randomAttemptFailedCounter++; //if it fails to populate too much, that means the grid is full so stop trying to add more
 				}
 			}
 		} while (randomAttemptCounter < number);
-
 	}
 
 	public void NextButtton(ActionEvent e) {
@@ -358,7 +337,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		reColor();
 		System.out.println("----------");
 		baseGrid.drawState();
-		
+
 		// at the end it must re-update all of the nodes to tell them to be
 		// Clickable because some of them might have changed
 		makeClickable();
@@ -485,16 +464,12 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 		fill(); // Fill and sets colors
 
-
 		makeClickable(); // Makes all the cells clickable
 		// This must be refreshed after any cell is modified
-		
-		baseGrid = new Grid(X, Y);
-		
-		initLabels(); // Refreshes all the options labels with config file values
-		
-		
 
+		baseGrid = new Grid(X, Y);
+
+		initLabels(); // Refreshes all the options labels with config file values
 	}
 
 	public void getConf() throws FileNotFoundException {
@@ -587,7 +562,6 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 		DrawGrid.setPrefSize(1, 1);
 		DrawGrid.setMaxSize(600, 600);
-
 	}
 
 	public void reColor() { // Can be used to set background color, will be
@@ -615,7 +589,6 @@ public class Main extends Application { // All the usual JavaFX stuffs
 				} else {
 					unPopNode(p, l);
 				}
-
 			}
 		}
 	}
@@ -656,12 +629,10 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		r.setFill(Color.web(Primary));
 
 		DrawGrid.add(r, x, y);
-		
 
 		baseGrid.changeCellState(x-1, y-1);
 		makeClickable();
 		//System.out.println("pop:isnow"+baseGrid.getCellState(x-1, y-1));
-
 
 		// Then tell Andrew's code that a change has occurred
 	}
@@ -690,12 +661,10 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		r.setFill(Color.web(backround));
 
 		DrawGrid.add(r, x, y);
-		
+
 		baseGrid.changeCellState(x-1, y-1);
 		makeClickable();
 		//System.out.println("unpop:isnow"+baseGrid.getCellState(x-1, y-1));
-
-
 
 		// Then tell Andrew's code the change has happened
 	}
