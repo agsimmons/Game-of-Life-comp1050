@@ -581,10 +581,10 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		
 
 		// Goes through all grid nodes and re sets the color to new values
-		for (int l = 1; l < Y; l++) {
-			for (int p = 1; p < X; p++) {
+		for (int l = 2; l < Y; l++) {
+			for (int p = 2; p < X; p++) {
 
-				System.out.println(baseGrid.getCellState(p-1, l-1));
+				//System.out.println(baseGrid.getCellState(p-1, l-1));
 				if (baseGrid.getCellState(p-1, l-1)) { // Use the getpop thing
 
 					if (checkOutOfBounds(p, l)) {
@@ -608,8 +608,8 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 					r.setFill(Color.web(Primary));
 
-					System.out.println(p+"   "+l);
-					DrawGrid.add(r, p, l);
+					//System.out.println(p+"   "+l);
+					DrawGrid.add(r, p-1, l-1);
 				} else {
 					if (checkOutOfBounds(p, l)) {
 						return;
@@ -632,8 +632,8 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 					r.setFill(Color.web(backround));
 
-					System.out.println(p+"   "+l);
-					DrawGrid.add(r, p, l);					
+					//System.out.println(p+"   "+l);
+					DrawGrid.add(r, p-1, l-1);					
 				}
 			}
 		}
