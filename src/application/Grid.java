@@ -80,6 +80,19 @@ public class Grid implements GridInterface {
 			System.out.println();
 		}
 	}
+	
+	public void drawStateCompatability() {
+		for (int y = 0; y < gridHeight; y++) {
+			for (int x = 0; x < gridWidth; x++) {
+				if (gridState[x][y] == true) {
+					System.out.print("x");
+				} else {
+					System.out.print("o");
+				}
+			}
+			System.out.println();
+		}
+	}
 
 	private int getNeighborCount(int x, int y) {
 		int count = 0;
