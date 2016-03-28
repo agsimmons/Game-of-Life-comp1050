@@ -27,6 +27,7 @@ public class Grid implements GridInterface {
 		}
 	}
 
+	
 	public void simulateCycle() {
 		boolean[][] tempGridState = new boolean[gridWidth][gridHeight];
 		

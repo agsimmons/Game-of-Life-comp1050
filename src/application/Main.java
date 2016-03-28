@@ -66,6 +66,8 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 	public static int prefX;
 	public static int prefY;
+	
+	public static Grid baseGrid;
 
 	@FXML
 	GridPane DrawGrid;
@@ -160,12 +162,15 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		primary = primary.substring(2, 8);
 		backround = baseBack.concat(back); // And sets them to web hex color strings
 		Primary = basePrimary.concat(primary);
-
+		
+		System.out.println("back: "+backround);
+		System.out.println("prime: "+Primary);
 		// Needs to write the colors to config
+		//initColors(); // Sets the color labels correctly
 
-		fill(); // Fill colors
+		reColor();
+		//fill(); // Fill colors
 
-		initColors(); // Sets the color labels correctly
 
 		makeClickable(); // Makes all the cells clickable
 		// This must be refreshed after any cell is modified
@@ -348,6 +353,10 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 		// needs to simulate a cycle
 
+		baseGrid.simulateCycle();
+		reColor();
+		System.out.println("----------");
+		baseGrid.drawState();
 		
 		// at the end it must re-update all of the nodes to tell them to be
 		// Clickable because some of them might have changed
@@ -404,16 +413,19 @@ public class Main extends Application { // All the usual JavaFX stuffs
 					System.out.println("Row: " + ClickedRow);
 
 					String ClickedColor = target.getId();
-					System.out.println(ClickedColor);
-
-					if (true) {// if andrews method returrns true or false
+					
+					if (baseGrid.getCellState(ClickedRow-1, ClickedColumn-1)==false) {// if cell doesnt return true/populated
 								// populate or unpopulate the node respcitvly
 						popNode(ClickedColumn, ClickedRow);
+						
 
 					} else {
 						unPopNode(ClickedColumn, ClickedRow);
 
 					}
+					
+					baseGrid.drawState();
+
 				}
 			});
 			// Once this part is done, make it so dragging also works
@@ -476,6 +488,9 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 		makeClickable(); // Makes all the cells clickable
 		// This must be refreshed after any cell is modified
+		
+		baseGrid = new Grid(X, Y);
+		
 
 	}
 
@@ -592,15 +607,12 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		for (int l = 1; l < Y; l++) {
 			for (int p = 1; p < X; p++) {
 
-				Rectangle o = new Rectangle();
-
-				if (true) { // Use the getpop thing
-					o.setFill(Color.web(Primary));
+				if (baseGrid.getCellState(p-1, l-1)) { // Use the getpop thing
+					popNode(p, l);
 				} else {
-					o.setFill(Color.web(backround));
+					unPopNode(p, l);
 				}
 
-				DrawGrid.add(o, p, l);
 			}
 		}
 	}
@@ -641,6 +653,12 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		r.setFill(Color.web(Primary));
 
 		DrawGrid.add(r, x, y);
+		
+
+		baseGrid.changeCellState(x-1, y-1);
+		makeClickable();
+		//System.out.println("pop:isnow"+baseGrid.getCellState(x-1, y-1));
+
 
 		// Then tell Andrew's code that a change has occurred
 	}
@@ -669,6 +687,12 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		r.setFill(Color.web(backround));
 
 		DrawGrid.add(r, x, y);
+		
+		baseGrid.changeCellState(x-1, y-1);
+		makeClickable();
+		//System.out.println("unpop:isnow"+baseGrid.getCellState(x-1, y-1));
+
+
 
 		// Then tell Andrew's code the change has happened
 	}
