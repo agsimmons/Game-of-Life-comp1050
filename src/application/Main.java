@@ -197,7 +197,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 	// Apply and remake grid on button click
 
 	public void writeConf() throws IOException {
-		System.out.println("config saved");
+		System.out.println("Config Saved");
 
 		PrintWriter pw = new PrintWriter(new FileWriter("config.txt"));
 
