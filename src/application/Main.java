@@ -392,7 +392,6 @@ public class Main extends Application { // All the usual JavaFX stuffs
 					int ClickedRow = Integer.parseInt(target.getProperties().get("gridpane-row").toString());
 					System.out.println("Row: " + ClickedRow);
 
-					String ClickedColor = target.getId();
 					
 					if (baseGrid.getCellState(ClickedRow-1, ClickedColumn-1)==false) {// if cell doesnt return true/populated
 								// populate or unpopulate the node respcitvly
@@ -551,10 +550,12 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		ObservableList<Node> nodes = DrawGrid.getChildren();// adds all of the
 		// Drawgrids children to a list
 
-		int count = 0;
+		int count = nodes.size();
+		/*
 		for (final Node target : nodes) {// for all nodes in the list nodes
 			count++;
 		}
+		*/
 
 		System.out.println("cells#" + (X - 1) * (Y - 1));
 		System.out.println(DrawGrid.getChildren());
@@ -570,15 +571,6 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 		// Also make it write the current color values to the config file so
 		// they are persistent
-
-		int size;
-		if (prefX > prefY) {
-			size = prefY;
-		} else if (prefX < prefY) {
-			size = prefX;
-		} else {
-			size = prefX;
-		} // Get the correct x and y
 
 		// Goes through all grid nodes and re sets the color to new values
 		for (int l = 1; l < Y; l++) {
