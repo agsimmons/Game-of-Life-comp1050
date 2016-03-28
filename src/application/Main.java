@@ -144,7 +144,8 @@ public class Main extends Application { // All the usual JavaFX stuffs
 	}
 
 	public void save(ActionEvent e) {
-		
+		reColor();
+		reColor();
 	}
 
 	public void load(ActionEvent e) {
@@ -336,7 +337,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		baseGrid.simulateCycle();
 		reColor();
 		System.out.println("----------");
-		baseGrid.drawState();
+		baseGrid.drawStateCompatability();
 
 		// at the end it must re-update all of the nodes to tell them to be
 		// Clickable because some of them might have changed
@@ -393,7 +394,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 					System.out.println("Row: " + ClickedRow);
 
 					
-					if (baseGrid.getCellState(ClickedRow-1, ClickedColumn-1)==false) {// if cell doesnt return true/populated
+					if (baseGrid.getCellState(ClickedRow-1, ClickedColumn-1)== false) {// if cell doesnt return true/populated
 								// populate or unpopulate the node respcitvly
 						popNode(ClickedColumn, ClickedRow);
 						
@@ -403,7 +404,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 					}
 					
-					baseGrid.drawState();
+					baseGrid.drawStateCompatability();
 
 				}
 			});
@@ -571,18 +572,72 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 		// Also make it write the current color values to the config file so
 		// they are persistent
+		
+
+		//if((backround==backColor.getValue().toString())&(Primary==primaryColor.getValue().toString())){//if no change
+		//	return;
+		//}
+		
+		
 
 		// Goes through all grid nodes and re sets the color to new values
 		for (int l = 1; l < Y; l++) {
 			for (int p = 1; p < X; p++) {
 
+				System.out.println(baseGrid.getCellState(p-1, l-1));
 				if (baseGrid.getCellState(p-1, l-1)) { // Use the getpop thing
-					popNode(p, l);
+
+					if (checkOutOfBounds(p, l)) {
+						return;
+					}
+
+					int size;
+					if (prefX > prefY) {
+						size = prefY;
+					} else if (prefX < prefY) {
+						size = prefX;
+					} else {
+						size = prefX;
+					} // Finds the smallest preferred size which ends up being the side length
+						// of one of the squares on the grid
+						// and makes a rectangle that size and puts it on the grid
+					Rectangle r = new Rectangle();
+
+					r.setHeight(size);
+					r.setWidth(size);
+
+					r.setFill(Color.web(Primary));
+
+					System.out.println(p+"   "+l);
+					DrawGrid.add(r, p, l);
 				} else {
-					unPopNode(p, l);
+					if (checkOutOfBounds(p, l)) {
+						return;
+					}
+
+					int size;
+					if (prefX > prefY) {
+						size = prefY;
+					} else if (prefX < prefY) {
+						size = prefX;
+					} else {
+						size = prefX;
+					} // Finds the smallest preferred size which ends up being the side length
+						// of one of the squares on the grid
+						// and makes a rectangle that size and puts it on the grid
+					Rectangle r = new Rectangle();
+
+					r.setHeight(size);
+					r.setWidth(size);
+
+					r.setFill(Color.web(backround));
+
+					System.out.println(p+"   "+l);
+					DrawGrid.add(r, p, l);					
 				}
 			}
 		}
+		makeClickable();
 	}
 
 	public boolean checkOutOfBounds(int x, int y) {// checks if you are trying to edit a cell that isnt on the grid
@@ -622,11 +677,10 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 		DrawGrid.add(r, x, y);
 
-		baseGrid.changeCellState(x-1, y-1);
+		baseGrid.changeCellState(x, y);
 		makeClickable();
 		//System.out.println("pop:isnow"+baseGrid.getCellState(x-1, y-1));
 
-		// Then tell Andrew's code that a change has occurred
 	}
 
 	public void unPopNode(int x, int y) {
@@ -654,11 +708,10 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 		DrawGrid.add(r, x, y);
 
-		baseGrid.changeCellState(x-1, y-1);
+		baseGrid.changeCellState(x, y);
 		makeClickable();
 		//System.out.println("unpop:isnow"+baseGrid.getCellState(x-1, y-1));
 
-		// Then tell Andrew's code the change has happened
 	}
 
 	public static void main(String[] args) {
