@@ -40,7 +40,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("gridTest.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("gui.fxml"));
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
@@ -112,6 +112,12 @@ public class Main extends Application { // All the usual JavaFX stuffs
 	@FXML
 	Button addRandomsButton;
 
+	@FXML
+	Button saveButton;
+
+	@FXML
+	Button loadButton;
+
 	public static int debugCounter = 0; // Debugging counter and first checking var
 
 	public void initColors() { // Gets the colors from the config and sets the labels
@@ -133,6 +139,13 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		initColors();
 		initHeight();
 		initWidth();
+	}
+	public void save(ActionEvent e) {
+		
+	}
+
+	public void load(ActionEvent e) {
+		
 	}
 
 	public void applyColor(ActionEvent e) {
@@ -251,7 +264,8 @@ public class Main extends Application { // All the usual JavaFX stuffs
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		clearGrid();
+		
+		//clearGrid();
 	}
 
 	public void addRandoms(ActionEvent e) {// adds random amount

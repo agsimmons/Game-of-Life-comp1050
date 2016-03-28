@@ -20,7 +20,7 @@
       <Button fx:id="startButton" layoutX="91.0" layoutY="644.0" mnemonicParsing="false" onAction="#StartButton" text="Start" />
       <Label fx:id="Xnumber" layoutX="272.0" layoutY="649.0" prefHeight="17.0" prefWidth="87.0" text="Width:" />
       <Label fx:id="Ynumber" layoutX="359.0" layoutY="649.0" text="Height: " />
-      <GridPane fx:id="DrawGrid" layoutX="14.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="600.0">
+      <GridPane fx:id="DrawGrid" layoutX="4.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="600.0">
         <rowConstraints>
           <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
         </rowConstraints>
@@ -40,6 +40,8 @@
                         <Label layoutX="14.0" layoutY="86.0" prefHeight="17.0" prefWidth="163.0" text="Number of randoms is the" />
                         <Label layoutX="14.0" layoutY="103.0" prefHeight="17.0" prefWidth="163.0" text="amount of random cells" />
                         <Label layoutX="14.0" layoutY="120.0" prefHeight="17.0" prefWidth="163.0" text="that get populated" />
+                        <Button fx:id="saveButton" layoutX="11.0" layoutY="147.0" mnemonicParsing="false" onAction="#save" prefHeight="27.0" prefWidth="164.0" text="Save" />
+                        <Button fx:id="loadButton" layoutX="11.0" layoutY="185.0" mnemonicParsing="false" onAction="#load" prefHeight="27.0" prefWidth="164.0" text="Load" />
                      </children>
                   </AnchorPane>
             </content>
@@ -62,8 +64,8 @@
                         <TextField fx:id="widthText" layoutX="108.0" layoutY="395.0" prefHeight="27.0" prefWidth="62.0" />
                         <Button fx:id="widthButton" layoutX="11.0" layoutY="448.0" mnemonicParsing="false" onAction="#applyWidth" prefHeight="27.0" prefWidth="160.0" text="Apply Width" />
                         <Label layoutX="12.0" layoutY="483.0" prefHeight="17.0" prefWidth="149.0" text="Changing the height or" />
-                        <Label layoutX="12.0" layoutY="500.0" prefHeight="17.0" prefWidth="149.0" text="width will restart the" />
-                        <Label layoutX="12.0" layoutY="517.0" prefHeight="17.0" prefWidth="149.0" text="simulation" />
+                        <Label layoutX="12.0" layoutY="500.0" prefHeight="17.0" prefWidth="149.0" text="width will take effect" />
+                        <Label layoutX="9.0" layoutY="517.0" prefHeight="17.0" prefWidth="176.0" text="after restarting the program" />
                         <Label layoutX="16.0" layoutY="173.0" prefHeight="17.0" prefWidth="156.0" text="Changing the colors will" />
                         <Label layoutX="16.0" layoutY="190.0" prefHeight="17.0" prefWidth="162.0" text="not restart the simulation" />
                         <Label layoutX="9.0" layoutY="213.0" prefHeight="17.0" prefWidth="171.0" text="It is best to keep height and" />
