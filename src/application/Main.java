@@ -240,22 +240,21 @@ public class Main extends Application { // All the usual JavaFX stuffs
 	}
 
 	public void applyWidth(ActionEvent e) {
-
-
 		
-		if(Integer.parseInt(heightText.getText())!=(X-1)){
-			X=(Integer.parseInt(heightText.getText())+1);
+		
+		if(Integer.parseInt(heightText.getText())!=(Y-1)){
+			Y=(Integer.parseInt(heightText.getText())+1);
 			
-		}else if((int) (heightSlider.getValue())!=(X-1)){
-			X=((int) (heightSlider.getValue())+1);
+		}else if((int) (heightSlider.getValue())!=(Y-1)){
+			Y=((int) (heightSlider.getValue())+1);
 			
 		}
 		
-		if(Integer.parseInt(widthText.getText())!=(Y-1)){
-			Y=(Integer.parseInt(widthText.getText())+1);
+		if(Integer.parseInt(widthText.getText())!=(X-1)){
+			X=(Integer.parseInt(widthText.getText())+1);
 			
-		}else if((int) (widthSlider.getValue())!=(Y-1)){
-			Y=((int) (widthSlider.getValue())+1);
+		}else if((int) (widthSlider.getValue())!=(X-1)){
+			X=((int) (widthSlider.getValue())+1);
 			
 		}
 		
