@@ -210,7 +210,15 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 	public void setRules(ActionEvent e) {
 		
-		System.out.println(rule1.getId());
+		baseGrid.setRuleOneState(rule1.isSelected());
+		baseGrid.setRuleTwoState(rule2.isSelected());
+		baseGrid.setRuleThreeState(rule3.isSelected());
+		baseGrid.setRuleFourState(rule4.isSelected());
+		
+		//sets the rules to the values of the checkbox's
+		//defaults to all true
+		
+		
 		
 	}
 
@@ -349,7 +357,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		return false;
 	}
 
-	public void popRandom(int number) {
+	public void popRandom(int number) {//TODO fix this
 
 		int randomAttemptCounter = 0;// counter for amount of randoms added 
 		int randomAttemptFailedCounter = 0;// counter for amount of failed population attempts

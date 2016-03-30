@@ -42,10 +42,10 @@
                         <Label layoutX="14.0" layoutY="120.0" prefHeight="17.0" prefWidth="163.0" text="that get populated" />
                         <Button fx:id="saveButton" layoutX="11.0" layoutY="147.0" mnemonicParsing="false" onAction="#save" prefHeight="27.0" prefWidth="164.0" text="Save" />
                         <Button fx:id="loadButton" layoutX="11.0" layoutY="185.0" mnemonicParsing="false" onAction="#load" prefHeight="27.0" prefWidth="164.0" text="Load" />
-                        <CheckBox fx:id="rule1" layoutX="14.0" layoutY="223.0" mnemonicParsing="false" onAction="#setRules" prefHeight="18.0" prefWidth="160.0" text="Enable Rule One" />
-                        <CheckBox fx:id="rule2" layoutX="14.0" layoutY="248.0" mnemonicParsing="false" onAction="#setRules" prefHeight="18.0" prefWidth="160.0" text="Enable Rule Two" />
-                        <CheckBox fx:id="rule3" layoutX="14.0" layoutY="273.0" mnemonicParsing="false" onAction="#setRules" prefHeight="18.0" prefWidth="160.0" text="Enable Rule Three" />
-                        <CheckBox fx:id="rule4" layoutX="14.0" layoutY="298.0" mnemonicParsing="false" onAction="#setRules" prefHeight="18.0" prefWidth="160.0" text="Enable Rule Four" />
+                        <CheckBox fx:id="rule1" layoutX="14.0" layoutY="223.0" mnemonicParsing="false" onAction="#setRules" prefHeight="18.0" prefWidth="160.0" selected="true" text="Enable Rule One" />
+                        <CheckBox fx:id="rule2" layoutX="14.0" layoutY="248.0" mnemonicParsing="false" onAction="#setRules" prefHeight="18.0" prefWidth="160.0" selected="true" text="Enable Rule Two" />
+                        <CheckBox fx:id="rule3" layoutX="14.0" layoutY="273.0" mnemonicParsing="false" onAction="#setRules" prefHeight="18.0" prefWidth="160.0" selected="true" text="Enable Rule Three" />
+                        <CheckBox fx:id="rule4" layoutX="14.0" layoutY="298.0" mnemonicParsing="false" onAction="#setRules" prefHeight="18.0" prefWidth="160.0" selected="true" text="Enable Rule Four" />
                      </children>
                   </AnchorPane>
             </content>
