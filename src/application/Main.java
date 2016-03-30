@@ -160,17 +160,40 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		initWidth();
 	}
 	
-	public void FillExtras(){
-		for(int i = 0;i<X;i++){
+	public void FillExtras() {
+		for (int i = 0; i < X; i++) {
 			baseGrid.changeCellState(i, 0);
 		}
 
-		for(int i = 0;i<Y;i++){
+		for (int i = 0; i < Y; i++) {
 			baseGrid.changeCellState(0, i);
 		}
+
+		baseGrid.changeCellState(0, 0);
+	}
+
+	public void clearExtras() {
+		for (int i = 0; i < X; i++) {
+			if(baseGrid.getCellState(i, 0)){
+				baseGrid.changeCellState(i, 0);
+			}
+			
+		}
+
+		for (int i = 0; i < Y; i++) {
+			if(baseGrid.getCellState(0, i)){
+				
+			
+			baseGrid.changeCellState(0, i);
+			}
+		}
+
+		if(baseGrid.getCellState(0, 0)){
+			
 		
 		baseGrid.changeCellState(0, 0);
-}
+		}
+	}
 
 	public void save(ActionEvent e) {
 		FileChooser fileChooser = new FileChooser();
@@ -231,9 +254,6 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		
 		//sets the rules to the values of the checkbox's
 		//defaults to all true
-		
-		
-		
 	}
 
 	
@@ -466,6 +486,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		// at the end it must re-update all of the nodes to tell them to be
 		// Clickable because some of them might have changed
 		makeClickable();
+		clearExtras();
 
 	}
 
