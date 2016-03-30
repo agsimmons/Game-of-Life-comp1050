@@ -199,6 +199,8 @@ public class Main extends Application { // All the usual JavaFX stuffs
 			baseGrid.setGridState(tempGridState);
 
 			//TODO: Draw new grid to gui
+			baseGrid.drawState();
+			//it doesnt import right to the basegrid or something
 
 		} catch(Exception e2) {
 			System.out.println("ERROR: Invalid File!");
