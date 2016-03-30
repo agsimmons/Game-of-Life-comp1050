@@ -119,6 +119,19 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 	@FXML
 	Button loadButton;
+	
+	@FXML
+	CheckBox rule1;
+	
+	@FXML
+	CheckBox rule2;
+	
+	@FXML
+	CheckBox rule3;
+	
+	@FXML
+	CheckBox rule4;
+	
 
 	public static int debugCounter = 0; // Debugging counter and first checking var
 
@@ -151,6 +164,14 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		
 	}
 
+	public void setRules(ActionEvent e) {
+		
+		System.out.println(rule1.getId());
+		
+	}
+
+	
+	
 	public void applyColor(ActionEvent e) {
 		String baseBack = "#";
 		String basePrimary = "#";
@@ -164,8 +185,8 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		backround = baseBack.concat(back); // And sets them to web hex color strings
 		Primary = basePrimary.concat(primary);
 
-		System.out.println("back: "+backround);
-		System.out.println("prime: "+Primary);
+		//System.out.println("back: "+backround);
+		//System.out.println("prime: "+Primary);
 		// Needs to write the colors to config
 		//initColors(); // Sets the color labels correctly
 
@@ -302,7 +323,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 					return;
 				}
 				// TODO
-				if (true) { // If the cell is populated or not change to !andrewcode
+				if (baseGrid.getCellState(randX-1, randY-1)== false) { // If the cell is populated or not change to !andrewcode
 
 					popNode(randX, randY); // Then populate random node
 
@@ -582,13 +603,13 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		
 
 		// Goes through all grid nodes and re sets the color to new values
-		for (int l = 2; l < Y; l++) {
-			for (int p = 2; p < X; p++) {
-
+		for (int l = 2; l != (Y+1); l++) {
+			for (int p = 2; p != (X+1); p++) {
+				
 				//System.out.println(baseGrid.getCellState(p-1, l-1));
 				if (baseGrid.getCellState(p-1, l-1)) { // Use the getpop thing
 
-					if (checkOutOfBounds(p, l)) {
+					if (checkOutOfBounds(p-1, l-1)) {
 						return;
 					}
 
@@ -612,7 +633,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 					//System.out.println(p+"   "+l);
 					DrawGrid.add(r, p-1, l-1);
 				} else {
-					if (checkOutOfBounds(p, l)) {
+					if (checkOutOfBounds(p-1, l-1)) {
 						return;
 					}
 
@@ -636,8 +657,11 @@ public class Main extends Application { // All the usual JavaFX stuffs
 					//System.out.println(p+"   "+l);
 					DrawGrid.add(r, p-1, l-1);					
 				}
+				
 			}
+				
 		}
+		
 		makeClickable();
 	}
 
