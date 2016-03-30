@@ -46,6 +46,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
+			primaryStage.setTitle("Game of Life");
 			primaryStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -282,6 +283,8 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		pw.close();
 	}
 
+	
+	//TODO for the height and width, need to recalc pref higthts etc before remakeing grid
 	public void applyHeight(ActionEvent e) {
 
 		if(Integer.parseInt(heightText.getText())!=(Y-1)) {
@@ -529,6 +532,8 @@ public class Main extends Application { // All the usual JavaFX stuffs
 	}
 
 	public void initAll() throws FileNotFoundException {
+		
+		
 
 		getConf(); // Reads the config file
 
