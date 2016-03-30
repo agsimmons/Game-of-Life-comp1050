@@ -120,6 +120,14 @@ public class Grid implements GridInterface {
 	public boolean getCellState(int x, int y) {
 		return gridState[x][y];
 	}
+	
+	public boolean[][] getGridState() {
+		return gridState;
+	}
+	
+	public void setGridState(boolean[][] gridState) {
+		this.gridState = gridState;
+	}
 
 	public void setRuleOneState(boolean newState) {
 		ruleOneEnabled = newState;
