@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import javafx.application.Application;
@@ -158,6 +159,18 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		initHeight();
 		initWidth();
 	}
+	
+	public void FillExtras(){
+		for(int i = 0;i<X;i++){
+			baseGrid.changeCellState(i, 0);
+		}
+
+		for(int i = 0;i<Y;i++){
+			baseGrid.changeCellState(0, i);
+		}
+		
+		baseGrid.changeCellState(0, 0);
+}
 
 	public void save(ActionEvent e) {
 		FileChooser fileChooser = new FileChooser();
@@ -348,6 +361,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		} catch (Exception exception) {
 			popRandom(0);
 		}
+		FillExtras();//removes the extras so that they dont interfere w/ simulation
 	}
 
 	public boolean isFirst() {
@@ -362,32 +376,67 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 	public void popRandom(int number) {//TODO fix this
 
-		int randomAttemptCounter = 0;// counter for amount of randoms added 
-		int randomAttemptFailedCounter = 0;// counter for amount of failed population attempts
-		do {// Tries to populate random cells "number" times,
-			// these can overlap so if its told to populate 12 cells then 8
-			// could be populated with 4 overlap
+		FillExtras();//fills nonexistant cells with nonexistant values
+		//to keep them from being counted in random
 
-			int popOrNot = (int) Math.round(Math.random()); // 0 or 1 for yes populate or not
-			// then random x and y coordinates that are possible
+		
+		int availableNodes = 0;
+		
+		ArrayList<String> usedCoords = new ArrayList<>();
+		
+		
+		for(int tx = 0;tx<(X-1);tx++){//finds how many avabaible nnotes there are
+			for(int ty = 0;ty<(Y-1);ty++){
+				if(baseGrid.getCellState(tx, ty)==false){//if cell is not populated add to avaiable spaces
+					availableNodes++;
+				}else{
+					String currentCoord = (Integer.toString(tx)+"x"+Integer.toString(ty)+"y");
+					usedCoords.add(currentCoord);
+				}
+			}
+		}
+		
+		//System.out.println(usedCoords);
+		if((number>((X-1)*(Y-1)))|(availableNodes==0)){
+			//System.out.println("Too big or no avaiable nodes");
+			return;
+		}
+		int added = 0;
+		
+		if(number==0){
+			return;
+		}
+		
+		do {
+			//System.out.println("avaialale nodes: "+availableNodes);
+			//System.out.println("todadd: "+number+"     added:"+added);
+			
 			int randX = (int) (Math.random() * ((X - 2) + 1) + 1);
 			int randY = (int) (Math.random() * ((Y - 2) + 1) + 1);
 
-			if (popOrNot == 1) { // If populate
-				if(randomAttemptFailedCounter>(X*Y)){
-					return;
-				}
-				// TODO
-				if (baseGrid.getCellState(randX-1, randY-1)== false) { // If the cell is populated or not change to !andrewcode
-
-					popNode(randX, randY); // Then populate random node
-
-					randomAttemptCounter++;
-				} else {
-					randomAttemptFailedCounter++; //if it fails to populate too much, that means the grid is full so stop trying to add more
-				}
+			String currentCoord = (Integer.toString(randX)+"x"+Integer.toString(randY)+"y");
+			//(usedCoords.contains(currentCoord)==false)
+			
+			if(usedCoords.contains(currentCoord)){
+				//System.out.println(currentCoord+" is used");
+			}else{
+				popNode(randX, randY); // Then populate random node
+				availableNodes--;
+				added++;
+				usedCoords.add(currentCoord);
+			}			
+			if(availableNodes<=0){
+				System.out.println("out of available nodes, or java had a memory error");
+				return;
 			}
-		} while (randomAttemptCounter < number);
+			if(added>=number){
+				System.out.println("done, or java had a memory error");
+				return;
+			}
+
+			
+			
+		} while (true);
 	}
 
 	public void NextButtton(ActionEvent e) {
@@ -540,6 +589,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		calcPrefSize(); // Finds best size from grid
 
 		initPopulate(); // Makes the grid
+		
 
 		fill(); // Fill and sets colors
 
@@ -549,6 +599,8 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		baseGrid = new Grid(X, Y);
 
 		initLabels(); // Refreshes all the options labels with config file values
+
+
 	}
 
 	public void getConf() throws FileNotFoundException {
