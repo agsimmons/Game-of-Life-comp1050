@@ -65,6 +65,9 @@ public class Main extends Application { // All the usual JavaFX stuffs
 	Label Xnumber;
 	public static int X;
 	public static int Y;
+	
+	public static int colorX;
+	public static int colorY;
 
 	//TODO find bug that makes back and prime switch and x and y switch
 
@@ -685,7 +688,9 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		baseGrid = new Grid(X, Y);
 
 		initLabels(); // Refreshes all the options labels with config file values
-
+		
+		colorX=X;
+		colorY=Y;
 
 	}
 
@@ -798,8 +803,8 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		
 
 		// Goes through all grid nodes and re sets the color to new values
-		for (int l = 2; l != (Y+1); l++) {
-			for (int p = 2; p != (X+1); p++) {
+		for (int l = 2; l != (colorY+1); l++) {
+			for (int p = 2; p != (colorX+1); p++) {
 				
 				//System.out.println(baseGrid.getCellState(p-1, l-1));
 				if (baseGrid.getCellState(p-1, l-1)) { // Use the getpop thing
