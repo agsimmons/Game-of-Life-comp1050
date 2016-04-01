@@ -11,7 +11,11 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
@@ -21,6 +25,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -171,7 +176,65 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 		baseGrid.changeCellState(0, 0);
 	}
+	
+	
+	static int interval = 1000;//timer interval in ms
 
+    public Timeline timeline;
+    public Label timerLabel = new Label();
+    public DoubleProperty timeSeconds = new SimpleDoubleProperty();
+    public Duration time = Duration.ZERO, splitTime = Duration.ZERO;
+
+    
+    
+
+	public void startTimer(){
+        timeline = new Timeline(
+            new KeyFrame(Duration.millis(interval),
+            new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent t) {
+                    Duration duration = ((KeyFrame)t.getSource()).getTime();
+                    time = time.add(duration);
+                    timeSeconds.set(time.toSeconds());
+                    baseGrid.simulateCycle();
+            		reColor();
+            		System.out.println("----------");
+            		//baseGrid.drawStateCompatability();
+
+            		// at the end it must re-update all of the nodes to tell them to be
+            		// Clickable because some of them might have changed
+            		makeClickable();
+            		clearExtras();
+                }
+            })
+        );
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+    }
+    
+    
+    public void stopClearTimer(){
+        timeline.stop();
+        time = Duration.ZERO;
+        //reset timeline
+        timeline = new Timeline(
+                new KeyFrame(Duration.millis(interval),
+                new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent t) {
+                        Duration duration = ((KeyFrame)t.getSource()).getTime();
+                        time = time.add(duration);
+                        timeSeconds.set(time.toSeconds());
+                    }
+                })
+            );
+        
+        timeline.setCycleCount(Timeline.INDEFINITE);    
+    }
+    
+	
+	
 	public void clearExtras() {
 		for (int i = 0; i < X; i++) {
 			if(baseGrid.getCellState(i, 0)){
@@ -505,10 +568,12 @@ public class Main extends Application { // All the usual JavaFX stuffs
 			startButton.setText("Start Loop");
 			isLoop = false;
 			loop.setSelected(false);
+			stopClearTimer();
 		} else {
 			startButton.setText("Stop Loop");
 			isLoop = true;
 			loop.setSelected(true);
+			startTimer();
 		}
 
 		makeClickable();
