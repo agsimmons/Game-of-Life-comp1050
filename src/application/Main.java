@@ -180,8 +180,10 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		baseGrid.changeCellState(0, 0);
 	}
 	
+	static getTiming timing = new getTiming() {//abstract class
+	};
 	
-	static int interval = 1000;//timer interval in ms
+	static int interval = timing.defaultTiming();//timer interval in ms
 
     public Timeline timeline;
     public Label timerLabel = new Label();
