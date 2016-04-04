@@ -66,6 +66,9 @@ public class Main extends Application { // All the usual JavaFX stuffs
 	public static int X;
 	public static int Y;
 	
+	public static int dimX;
+	public static int dimY;
+	
 	public static int colorX;
 	public static int colorY;
 
@@ -153,13 +156,13 @@ public class Main extends Application { // All the usual JavaFX stuffs
 	}
 
 	public void initHeight() {
-		heightText.setText(Integer.toString(Y - 1));
-		heightSlider.setValue(Y-1);
+		heightText.setText(Integer.toString(dimY - 1));
+		heightSlider.setValue(dimY-1);
 	}
 
 	public void initWidth() {
-		widthText.setText(Integer.toString(X - 1));
-		widthSlider.setValue(X-1);
+		widthText.setText(Integer.toString(dimX - 1));
+		widthSlider.setValue(dimX-1);
 	}
 
 	public void initLabels() {
@@ -376,52 +379,44 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 		PrintWriter pw = new PrintWriter(new FileWriter("config.txt"));
 
-		pw.write(Integer.toString((X - 1))+"\n");
-		pw.write(Integer.toString((Y - 1))+"\n");
+		pw.write(Integer.toString((dimX - 1))+"\n");
+		pw.write(Integer.toString((dimY - 1))+"\n");
 		pw.write(backround+"\n");
 		pw.write(Primary+"\n");
 
 		pw.close();
 	}
-
+		
 	
-	//TODO for the height and width, need to recalc pref higthts etc before remakeing grid
-	public void applyHeight(ActionEvent e) {
+	public void applyDimensions(){
 
-		if(Integer.parseInt(heightText.getText())!=(Y-1)) {
-			Y=(Integer.parseInt(heightText.getText())+1);
+		if(Integer.parseInt(heightText.getText())!=(dimY-1)) {
+			dimY=(Integer.parseInt(heightText.getText())+1);
 			
-		} else if((int) (heightSlider.getValue())!=(Y-1)) {
-			Y=((int) (heightSlider.getValue())+1);
+		} else if((int) (heightSlider.getValue())!=(dimY-1)) {
+			dimY=((int) (heightSlider.getValue())+1);
 		}
 		
-		if(Integer.parseInt(widthText.getText())!=(X-1)) {
-			X=(Integer.parseInt(widthText.getText())+1);
-		} else if((int) (widthSlider.getValue())!=(X-1)) {
-			X=((int) (widthSlider.getValue())+1);
+		if(Integer.parseInt(widthText.getText())!=(dimX-1)) {
+			dimX=(Integer.parseInt(widthText.getText())+1);
+		} else if((int) (widthSlider.getValue())!=(dimX-1)) {
+			dimX=((int) (widthSlider.getValue())+1);
 		}
 
 		initLabels();
 		resetGrid();
+
+	}
+	
+	
+	//TODO for the height and width, need to recalc pref higthts etc before remakeing grid
+	public void applyHeight(ActionEvent e) {
+		applyDimensions();
 	}
 
 	public void applyWidth(ActionEvent e) {
 
-		if(Integer.parseInt(heightText.getText())!=(Y-1)){
-			Y=(Integer.parseInt(heightText.getText())+1);
-		}else if((int) (heightSlider.getValue())!=(Y-1)){
-			Y=((int) (heightSlider.getValue())+1);
-		}
-		
-		if(Integer.parseInt(widthText.getText())!=(X-1)){
-			X=(Integer.parseInt(widthText.getText())+1);
-		}else if((int) (widthSlider.getValue())!=(X-1)){
-			X=((int) (widthSlider.getValue())+1);
-		}
-
-		initLabels();
-
-		resetGrid();
+		applyDimensions();
 	}
 
 	public void resetGrid() {
@@ -689,10 +684,13 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 		baseGrid = new Grid(X, Y);
 
-		initLabels(); // Refreshes all the options labels with config file values
-		
+
 		colorX=X;
 		colorY=Y;
+		dimX=X;
+		dimY=Y;
+		initLabels(); // Refreshes all the options labels with config file values
+		
 
 	}
 
