@@ -696,8 +696,8 @@ public class Main extends Application { // All the usual JavaFX stuffs
 				if (Y < 11) {
 					Y = 11;
 				}
-				if (Y > 51) {
-					Y = 51;
+				if (Y > 101) {
+					Y = 101;
 				}
 				Ynumber.setText("Height: " + (Y - 1));
 			} else if (i == 2) {
