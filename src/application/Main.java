@@ -66,7 +66,6 @@ public class Main extends Application { // All the usual JavaFX stuffs
 	public static int X;
 	public static int Y;
 	
-	public static int dimX;
 	public static int dimY;
 	
 	public static int colorX;
@@ -160,15 +159,10 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		heightSlider.setValue(dimY-1);
 	}
 
-	public void initWidth() {
-		widthText.setText(Integer.toString(dimX - 1));
-		widthSlider.setValue(dimX-1);
-	}
 
 	public void initLabels() {
 		initColors();
 		initHeight();
-		initWidth();
 	}
 	
 	public void FillExtras() {
@@ -379,7 +373,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 		PrintWriter pw = new PrintWriter(new FileWriter("config.txt"));
 
-		pw.write(Integer.toString((dimX - 1))+"\n");
+		pw.write(Integer.toString((dimY - 1))+"\n");
 		pw.write(Integer.toString((dimY - 1))+"\n");
 		pw.write(backround+"\n");
 		pw.write(Primary+"\n");
@@ -397,11 +391,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 			dimY=((int) (heightSlider.getValue())+1);
 		}
 		
-		if(Integer.parseInt(widthText.getText())!=(dimX-1)) {
-			dimX=(Integer.parseInt(widthText.getText())+1);
-		} else if((int) (widthSlider.getValue())!=(dimX-1)) {
-			dimX=((int) (widthSlider.getValue())+1);
-		}
+		
 
 		initLabels();
 		resetGrid();
@@ -687,8 +677,8 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 		colorX=X;
 		colorY=Y;
-		dimX=X;
 		dimY=Y;
+		
 		initLabels(); // Refreshes all the options labels with config file values
 		
 
@@ -733,6 +723,9 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 		}
 
+		Y=X;
+		
+		
 		System.out.println("Config loaded");
 		scanner.close();
 	}
