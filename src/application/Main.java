@@ -443,9 +443,9 @@ public class Main extends Application { // All the usual JavaFX stuffs
 				System.out.println("Too big, add error here");
 				return;
 			}
-			popRandom(rand);
+			populateRandom(rand);
 		} catch (Exception exception) {
-			popRandom(0);
+			populateRandom(0);
 		}
 		FillExtras();//removes the extras so that they dont interfere w/ simulation
 	}
@@ -460,7 +460,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		return false;
 	}
 
-	public void popRandom(int number) {//TODO fix this
+	public void populateRandom(int number) {//TODO fix this
 
 		FillExtras();//fills nonexistant cells with nonexistant values
 		//to keep them from being counted in random
@@ -506,7 +506,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 			if(usedCoords.contains(currentCoord)){
 				//System.out.println(currentCoord+" is used");
 			}else{
-				popNode(randX, randY); // Then populate random node
+				populateNode(randX, randY); // Then populate random node
 				availableNodes--;
 				added++;
 				usedCoords.add(currentCoord);
@@ -609,11 +609,11 @@ public class Main extends Application { // All the usual JavaFX stuffs
 					
 					if (baseGrid.getCellState(ClickedRow-1, ClickedColumn-1)== false) {// if cell doesnt return true/populated
 								// populate or unpopulate the node respcitvly
-						popNode(ClickedColumn, ClickedRow);
+						populateNode(ClickedColumn, ClickedRow);
 						
 
 					} else {
-						unPopNode(ClickedColumn, ClickedRow);
+						unpopulateNode(ClickedColumn, ClickedRow);
 
 					}
 					
@@ -877,7 +877,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		return false;
 	}
 
-	public void popNode(int x, int y) {
+	public void populateNode(int x, int y) {
 
 		if (checkOutOfBounds(x, y)) {
 			return;
@@ -908,7 +908,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 	}
 
-	public void unPopNode(int x, int y) {
+	public void unpopulateNode(int x, int y) {
 
 		if (checkOutOfBounds(x, y)) {
 			return;
