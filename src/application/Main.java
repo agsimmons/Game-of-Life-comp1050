@@ -195,7 +195,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
                     timeSeconds.set(time.toSeconds());
                     baseGrid.simulateCycle();
             		reColor();
-            		System.out.println("----------");
+            		//System.out.println("----------");
             		//baseGrid.drawStateCompatability();
 
             		// at the end it must re-update all of the nodes to tell them to be
