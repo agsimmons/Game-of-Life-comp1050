@@ -547,6 +547,12 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		if (isFirst()) {
 			try {
 				initAll();
+				// Fixes the button labels and loop state
+				startButton.setText("Start Loop");
+				isLoop = false;
+				loop.setSelected(false);
+				nextButton.setText("Next");
+
 			} catch (FileNotFoundException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
