@@ -102,13 +102,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 	Button heightButton;
 
 	@FXML
-	Button widthButton;
-
-	@FXML
 	Slider heightSlider;
-
-	@FXML
-	Slider widthSlider;
 
 	@FXML
 	ColorPicker backColor;
