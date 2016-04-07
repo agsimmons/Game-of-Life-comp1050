@@ -123,12 +123,6 @@ public class Main extends Application { // All the usual JavaFX stuffs
 	Button addRandomsButton;
 
 	@FXML
-	Button saveButton;
-
-	@FXML
-	Button loadButton;
-	
-	@FXML
 	CheckBox rule1;
 	
 	@FXML
@@ -254,55 +248,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		}
 	}
 
-	public void save(ActionEvent e) {
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Create saved state");
-		//File stateFile = fileChooser.showOpenDialog(null);
-		
-		//TODO: Save state of grid variable into file.
-	}
 
-	public void load(ActionEvent e) {
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Open saved state");
-		File stateFile = fileChooser.showOpenDialog(null);
-		
-		int saveWidth;
-		int saveHeight;
-		Scanner saveScanner = null;
-		
-		try {
-			System.out.println("Ding");
-			saveScanner = new Scanner(stateFile);
-		} catch (FileNotFoundException e1) {
-			System.out.println("ERROR: File Not Found!");
-			e1.printStackTrace();
-		}
-		
-		//TODO: Load contents of file into grid variable, then redraw(?)
-		try {
-			System.out.println("Dong");
-
-			saveWidth = saveScanner.nextInt();
-			saveHeight = saveScanner.nextInt();
-
-			boolean[][] tempGridState = new boolean[saveWidth][saveHeight];
-
-			while(saveScanner.hasNextInt()) {
-				tempGridState[saveScanner.nextInt()][saveScanner.nextInt()] = true;
-			}
-
-			baseGrid.setGridState(tempGridState);
-
-			//TODO: Draw new grid to gui
-			baseGrid.drawState();
-			//it doesnt import right to the basegrid or something
-
-		} catch(Exception e2) {
-			System.out.println("ERROR: Invalid File!");
-			e2.printStackTrace();
-		}
-	}
 
 	public void setRules(ActionEvent e) {
 		
@@ -442,7 +388,6 @@ public class Main extends Application { // All the usual JavaFX stuffs
 	}
 
 	public void populateRandom(int number) {//TODO fix this
-
 		FillExtras();//fills nonexistant cells with nonexistant values
 		//to keep them from being counted in random
 
