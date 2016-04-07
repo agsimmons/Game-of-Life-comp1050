@@ -1,13 +1,10 @@
 package application;
-
+//lots of imports
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.InvocationTargetException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -17,15 +14,10 @@ import javafx.application.Application;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import javafx.util.Duration;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -36,15 +28,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 
-public class Main extends Application { // All the usual JavaFX stuffs
+public class Main extends Application { // All the usual JavaFX stuffs such as loading the fxml file
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -59,90 +51,66 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		}
 	}
 
+	//init ALL THE VARIABLES
+	public static int X;
+	public static int Y;
+	public static int dimY;
+	public static int colorX;
+	public static int colorY;
+	public static boolean isLoop = false;
+	public static String backround;
+	public static String Primary;
+	public static int prefX;
+	public static int prefY;
+	public static Grid baseGrid;
+	public static int debugCounter = 0;
+	
 	@FXML
 	Label Ynumber;
 	@FXML
 	Label Xnumber;
-	public static int X;
-	public static int Y;
-	
-	public static int dimY;
-	
-	public static int colorX;
-	public static int colorY;
-
-	//TODO find bug that makes back and prime switch and x and y switch
-
-	public static boolean isLoop = false;
-
-	public static String backround;
-	public static String Primary;
-
-	public static int prefX;
-	public static int prefY;
-
-	public static Grid baseGrid;
-
 	@FXML
 	GridPane DrawGrid;
-
 	@FXML
 	CheckBox loop;
-
 	@FXML
 	Button startButton;
-
 	@FXML
 	Button nextButton;
-
 	@FXML
 	Button colorButton;
-
 	@FXML
 	Button heightButton;
-
 	@FXML
 	Slider heightSlider;
-
 	@FXML
 	ColorPicker backColor;
-
 	@FXML
 	ColorPicker primaryColor;
-
 	@FXML
 	TextField heightText;
-
 	@FXML
 	TextField widthText;
-
 	@FXML
 	TextField randomCount;
-
 	@FXML
 	Button addRandomsButton;
-
 	@FXML
 	CheckBox rule1;
-	
 	@FXML
 	CheckBox rule2;
-	
 	@FXML
 	CheckBox rule3;
-	
 	@FXML
 	CheckBox rule4;
+
 	
-
-	public static int debugCounter = 0; // Debugging counter and first checking var
-
 	public void initColors() { // Gets the colors from the config and sets the labels
 		backColor.setValue(Color.web(backround));
 		primaryColor.setValue(Color.web(Primary));
 	}
 
-	public void initHeight() {
+	public void initHeight() {//init the height and width
 		heightText.setText(Integer.toString(dimY - 1));
 		heightSlider.setValue(dimY-1);
 	}
@@ -153,7 +121,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		initHeight();
 	}
 	
-	public void FillExtras() {
+	public void FillExtras() {//prevents the randoms button from bugging up everything
 		for (int i = 0; i < X; i++) {
 			baseGrid.changeCellState(i, 0);
 		}
@@ -165,20 +133,19 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		baseGrid.changeCellState(0, 0);
 	}
 	
-	static getTiming timing = new getTiming() {//abstract class
+	
+	static getTiming timing = new getTiming() {//abstract class that gets the default time of 1s
 	};
 	
 	static int interval = timing.defaultTiming();//timer interval in ms
 
+	//inits/declares all timing parts
     public Timeline timeline;
     public Label timerLabel = new Label();
     public DoubleProperty timeSeconds = new SimpleDoubleProperty();
     public Duration time = Duration.ZERO, splitTime = Duration.ZERO;
 
-    
-    
-
-	public void startTimer(){
+	public void startTimer(){//starts the timer/is the timer on state
         timeline = new Timeline(
             new KeyFrame(Duration.millis(interval),
             new EventHandler<ActionEvent>() {
@@ -187,13 +154,8 @@ public class Main extends Application { // All the usual JavaFX stuffs
                     Duration duration = ((KeyFrame)t.getSource()).getTime();
                     time = time.add(duration);
                     timeSeconds.set(time.toSeconds());
-                    baseGrid.simulateCycle();
-            		reColor();
-            		//System.out.println("----------");
-            		//baseGrid.drawStateCompatability();
-
-            		// at the end it must re-update all of the nodes to tell them to be
-            		// Clickable because some of them might have changed
+                    baseGrid.simulateCycle();//once a second simulate a cycle
+            		reColor();//and recolor all the nodes and the usual functionality
             		makeClickable();
             		clearExtras();
                 }
@@ -204,7 +166,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
     }
     
     
-    public void stopClearTimer(){
+    public void stopClearTimer(){//stops the timer and sets the timeline to zero
         timeline.stop();
         time = Duration.ZERO;
         //reset timeline
@@ -219,20 +181,17 @@ public class Main extends Application { // All the usual JavaFX stuffs
                     }
                 })
             );
-        
         timeline.setCycleCount(Timeline.INDEFINITE);    
     }
     
 	
 	
-	public void clearExtras() {
+	public void clearExtras() {//clears the invivible extras
 		for (int i = 0; i < X; i++) {
 			if(baseGrid.getCellState(i, 0)){
 				baseGrid.changeCellState(i, 0);
 			}
-			
 		}
-
 		for (int i = 0; i < Y; i++) {
 			if(baseGrid.getCellState(0, i)){
 				
@@ -240,15 +199,10 @@ public class Main extends Application { // All the usual JavaFX stuffs
 			baseGrid.changeCellState(0, i);
 			}
 		}
-
 		if(baseGrid.getCellState(0, 0)){
-			
-		
 		baseGrid.changeCellState(0, 0);
 		}
 	}
-
-
 
 	public void setRules(ActionEvent e) {
 		
@@ -276,13 +230,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		backround = baseBack.concat(back); // And sets them to web hex color strings
 		Primary = basePrimary.concat(primary);
 
-		//System.out.println("back: "+backround);
-		//System.out.println("prime: "+Primary);
-		// Needs to write the colors to config
-		//initColors(); // Sets the color labels correctly
-
-		reColor();
-		//fill(); // Fill colors
+		reColor();//re colors the nodes
 
 		makeClickable(); // Makes all the cells clickable
 		// This must be refreshed after any cell is modified
@@ -294,21 +242,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		}
 	}
 
-	/*
-	 * TODO make the sliders live update the labels
-	 * 
-	 * //refresh on slider release public void refreshHeight(ActionEvent e){
-	 * //heightText.setText(Double.toString(heightSlider.getValue()));
-	 * System.out.println(heightSlider.getValue()); }
-	 * 
-	 * public void refreshWidth(ActionEvent e){
-	 * widthText.setText(Double.toString(widthSlider.getValue()));
-	 * 
-	 * }
-	 */
-	// Apply and remake grid on button click
-
-	public void writeConf() throws IOException {
+	public void writeConf() throws IOException {//writes the current variables to the config
 		System.out.println("Config Saved");
 
 		PrintWriter pw = new PrintWriter(new FileWriter("config.txt"));
@@ -317,29 +251,20 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		pw.write(Integer.toString((dimY - 1))+"\n");
 		pw.write(backround+"\n");
 		pw.write(Primary+"\n");
-
 		pw.close();
 	}
 		
 	
-	public void applyDimensions(){
-
+	public void applyDimensions(){//sets the grid to the dimensions from the config file and update the height slider
 		if(Integer.parseInt(heightText.getText())!=(dimY-1)) {
 			dimY=(Integer.parseInt(heightText.getText())+1);
-			
-		} else if((int) (heightSlider.getValue())!=(dimY-1)) {
 			dimY=((int) (heightSlider.getValue())+1);
 		}
-		
-		
-
 		initLabels();
 		resetGrid();
 
 	}
 	
-	
-	//TODO for the height and width, need to recalc pref higthts etc before remakeing grid
 	public void applyHeight(ActionEvent e) {
 		applyDimensions();
 	}
@@ -349,7 +274,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		applyDimensions();
 	}
 
-	public void resetGrid() {
+	public void resetGrid() {//used to reset the grid, now it just saves the config
 		try {
 			writeConf();
 		} catch (IOException e) {
@@ -357,7 +282,6 @@ public class Main extends Application { // All the usual JavaFX stuffs
 			e.printStackTrace();
 		}
 		
-		//clearGrid();
 	}
 
 	public void addRandoms(ActionEvent e) {// adds random amount
@@ -514,7 +438,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		makeClickable();
 	}
 
-	public void makeClickable() {
+	public void makeClickable() {//iterates through all the nodes and makes them clickable
 
 		// Note to future self, getchildren returns an Observablelist, just so u
 		// know and don't have to trial and error alot again
@@ -549,17 +473,15 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 					}
 					
-					reColor();
-					reColor();
-					//baseGrid.drawStateCompatability();
+					reColor();//inverts the colors because reasons
+					reColor();//fixes the colors for the same reasons
 
 				}
 			});
-			// Once this part is done, make it so dragging also works
-			// just copy the code and make it set the drag event
 		}
 	}
 
+	//add row and col add rows and columns during the init time
 	public void addRow() {
 		RowConstraints Rcon = new RowConstraints();
 		Rcon.setPrefHeight(prefX);
@@ -572,6 +494,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		DrawGrid.getColumnConstraints().add(Ccon);
 	}
 
+	//calculates the prefered size of the nodes/rectangles
 	public void calcPrefSize() {
 
 		prefX = (int) Math.ceil(((double) 600) / ((double) X));
@@ -601,17 +524,14 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		}
 	}
 
-	public void initAll() throws FileNotFoundException {
+	public void initAll() throws FileNotFoundException {// the main init fucntion that runs all the init functions
 		
-		
-
 		getConf(); // Reads the config file
 
 		calcPrefSize(); // Finds best size from grid
 
 		initPopulate(); // Makes the grid
 		
-
 		fill(); // Fill and sets colors
 
 		makeClickable(); // Makes all the cells clickable
@@ -620,13 +540,11 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		baseGrid = new Grid(X, Y);
 
 
-		colorX=X;
-		colorY=Y;
+		colorX=X;//these vars keep the grid from going nuts when you change its size
+		colorY=Y;// they are only used to write the config later
 		dimY=Y;
 		
 		initLabels(); // Refreshes all the options labels with config file values
-		
-
 	}
 
 	public void getConf() throws FileNotFoundException {
@@ -668,8 +586,9 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 		}
 
-		Y=X;
-		
+		Y=X;// yeah, we made the grid a square only grid after the UI was to complex
+		//It used to be able to be and dimensions such as 56x73 but it was to confusing to change 
+		//the values. accoridng to test humans
 		
 		System.out.println("Config loaded");
 		scanner.close();
@@ -712,11 +631,6 @@ public class Main extends Application { // All the usual JavaFX stuffs
 		// Drawgrids children to a list
 
 		int count = nodes.size();
-		/*
-		for (final Node target : nodes) {// for all nodes in the list nodes
-			count++;
-		}
-		*/
 
 		System.out.println("cells#" + (X - 1) * (Y - 1));
 		System.out.println(DrawGrid.getChildren());
@@ -732,20 +646,11 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 		// Also make it write the current color values to the config file so
 		// they are persistent
-		
-
-		//if((backround==backColor.getValue().toString())&(Primary==primaryColor.getValue().toString())){//if no change
-		//	return;
-		//}
-		
-		
-
 		// Goes through all grid nodes and re sets the color to new values
 		for (int l = 2; l != (colorY+1); l++) {
 			for (int p = 2; p != (colorX+1); p++) {
 				
-				//System.out.println(baseGrid.getCellState(p-1, l-1));
-				if (baseGrid.getCellState(p-1, l-1)) { // Use the getpop thing
+				if (baseGrid.getCellState(p-1, l-1)) { // if the cell state is populated then set primary color
 
 					if (checkOutOfBounds(p-1, l-1)) {
 						return;
@@ -770,7 +675,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 					//System.out.println(p+"   "+l);
 					DrawGrid.add(r, p-1, l-1);
-				} else {
+				} else {//if the cell is unpopulated it is now backround
 					if (checkOutOfBounds(p-1, l-1)) {
 						return;
 					}
@@ -792,7 +697,6 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 					r.setFill(Color.web(backround));
 
-					//System.out.println(p+"   "+l);
 					DrawGrid.add(r, p-1, l-1);					
 				}
 				
@@ -813,7 +717,7 @@ public class Main extends Application { // All the usual JavaFX stuffs
 			return true;
 		}
 		return false;
-	}
+	}//if the universe like people (spefically us who wrote this) then you will never see this method
 
 	public void populateNode(int x, int y) {
 
@@ -842,7 +746,6 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 		baseGrid.changeCellState(x, y);
 		makeClickable();
-		//System.out.println("pop:isnow"+baseGrid.getCellState(x-1, y-1));
 
 	}
 
@@ -873,7 +776,6 @@ public class Main extends Application { // All the usual JavaFX stuffs
 
 		baseGrid.changeCellState(x, y);
 		makeClickable();
-		//System.out.println("unpop:isnow"+baseGrid.getCellState(x-1, y-1));
 
 	}
 
