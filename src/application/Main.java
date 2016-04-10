@@ -1,5 +1,11 @@
+/*
+*    Group Members:
+*        Andrew Simmons
+*        Nick Smith
+*/
+
 package application;
-//lots of imports
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
