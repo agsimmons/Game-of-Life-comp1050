@@ -256,10 +256,9 @@ public class Main extends Application { // All the usual JavaFX stuffs such as l
 		
 	
 	public void applyDimensions(){//sets the grid to the dimensions from the config file and update the height slider
-		if(Integer.parseInt(heightText.getText())!=(dimY-1)) {
-			dimY=(Integer.parseInt(heightText.getText())+1);
-			dimY=((int) (heightSlider.getValue())+1);
-		}
+		dimY = (Integer.parseInt(heightText.getText()) + 1);
+		dimY = ((int) (heightSlider.getValue()) + 1);
+
 		initLabels();
 		resetGrid();
 
